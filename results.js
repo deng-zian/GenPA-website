@@ -23,7 +23,7 @@
       });
       tip.hidden = false;
       term.setAttribute("aria-expanded", "true");
-      term.setAttribute("aria-describedby", tip.id);
+      if (tip.getAttribute("role") === "tooltip") term.setAttribute("aria-describedby", tip.id);
       tip.style.setProperty("--tip-shift", "0px");
       tip.classList.remove("is-above");
       const box = tip.getBoundingClientRect(),
@@ -62,6 +62,7 @@
         open();
       }
     });
+    tip.querySelectorAll("a").forEach((link) => link.addEventListener("click", close));
     helps.push({ root: help, close });
   });
   function closeAllHelp() {

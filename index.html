@@ -10,13 +10,13 @@
     <meta name="theme-color" content="#ffffff" />
     <title>GenPA · Image Generators as Efficient Robot Policies</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="style.css?v=180deddb6d" />
+    <link rel="stylesheet" href="style.css?v=cc533fc82d" />
     <script src="script.js?v=d60e89a1b1" defer></script>
     <script src="animation.js?v=b0e70ea49a" defer></script>
     <script src="navigation.js?v=0a8950c6c8" defer></script>
     <script src="gallery.js?v=053d9e728d" defer></script>
     <script src="latency.js?v=4d739154b5" defer></script>
-    <script src="method-tabs.js?v=401295a0a2" defer></script>
+    <script src="method-tabs.js?v=0245703039" defer></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -2491,13 +2491,21 @@
                       class="result-term"
                       aria-expanded="false"
                       aria-controls="visual-targets-tip"
+                      aria-haspopup="dialog"
                       >visual targets</button
-                    ><span class="result-tooltip" id="visual-targets-tip" role="tooltip" hidden
-                      ><strong>What are visual targets?</strong
+                    ><span
+                      class="result-tooltip"
+                      id="visual-targets-tip"
+                      role="dialog"
+                      aria-labelledby="visual-targets-tip-title"
+                      hidden
+                      ><strong id="visual-targets-tip-title">What are visual targets?</strong
                       ><span
                         >Training reuses the image generator’s native image-editing interface, with
                         depth maps, normals, segmentation maps, or future images as supervised
                         outputs. This visual loss also trains the action policy’s backbone.</span
+                      ><a class="result-tooltip-link" href="#visual-targets" data-method-target
+                        >See the visual targets <span aria-hidden="true">↑</span></a
                       ></span
                     ></span
                   >
@@ -3247,6 +3255,6 @@
         >Gen<span>PA</span><span class="wordmark-dot" aria-hidden="true"></span></a
       ><p>Image Generators as Efficient Robot Policies</p><a href="#main">Back to top ↑</a></footer
     >
-    <script src="results.js?v=fd94cda927" defer></script>
+    <script src="results.js?v=1a6f9a4604" defer></script>
   </body>
 </html>

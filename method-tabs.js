@@ -102,13 +102,21 @@
       tabs[next].focus({ preventScroll: true });
     });
   });
-  function selectHashTarget() {
+  function selectHashTarget(focus = false) {
     const id = location.hash.slice(1);
     const target = id && document.getElementById(id);
     const panel = target && target.closest("[data-method-panel]");
     if (!panel) return;
     select(panel.dataset.methodPanel);
-    requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    requestAnimationFrame(() => {
+      if (focus)
+        tabs
+          .find((tab) => tab.dataset.methodView === panel.dataset.methodPanel)
+          ?.focus({ preventScroll: true });
+      // Keep the view switcher visible when arriving at the gallery from Results.
+      const destination = target.id === "visual-targets" ? tablist : target;
+      destination.scrollIntoView({ block: "start" });
+    });
   }
   reducedMotion.addEventListener("change", () => {
     if (reducedMotion.matches) select(requestedView);
@@ -117,7 +125,17 @@
   root.classList.add("is-enhanced");
   tablist.hidden = false;
   selectHashTarget();
-  window.addEventListener("hashchange", selectHashTarget);
+  window.addEventListener("hashchange", () => selectHashTarget());
+  document.querySelectorAll("a[data-method-target]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        return;
+      event.preventDefault();
+      if (location.hash !== link.hash) history.pushState(null, "", link.hash);
+      // A repeated click must reopen the gallery even when the hash is unchanged.
+      selectHashTarget(true);
+    });
+  });
 })();
 
 // Briefly draw attention to the alternate view once, without changing the selection.
@@ -128,38 +146,31 @@
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   if (reducedMotion.matches) return;
   let seen = false,
-    inView = false,
-    timer;
+    inView = false;
   const observer = new IntersectionObserver(
     (entries) => {
-      inView = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio === 1);
-      schedule();
+      inView = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.5);
+      reveal();
     },
-    { threshold: 1, rootMargin: "-72px 0px -15% 0px" },
+    { threshold: 0.5, rootMargin: "-72px 0px -16px 0px" },
   );
   function stopWatching() {
-    clearTimeout(timer);
     observer.disconnect();
-    window.removeEventListener("scroll", schedule);
-    document.removeEventListener("visibilitychange", schedule);
+    document.removeEventListener("visibilitychange", reveal);
   }
   function dismiss() {
     seen = true;
     stopWatching();
     tab.classList.remove("method-tab-hint");
   }
-  function schedule() {
-    clearTimeout(timer);
+  function reveal() {
     if (seen || !inView || document.hidden) return;
-    // Let scrolling settle so the reader sees the full cue instead of passing it.
-    timer = setTimeout(() => {
-      if (seen || !inView || document.hidden) return;
-      seen = true;
-      stopWatching();
-      if (!reducedMotion.matches && tab.getAttribute("aria-selected") === "false") {
-        tab.classList.add("method-tab-hint");
-      }
-    }, 600);
+    // Start as the label enters from below; continued scrolling must not delay it.
+    seen = true;
+    stopWatching();
+    if (!reducedMotion.matches && tab.getAttribute("aria-selected") === "false") {
+      tab.classList.add("method-tab-hint");
+    }
   }
   // Once a reader interacts with the tabs, the hint has served its purpose.
   tablist.addEventListener("pointerdown", dismiss, { once: true });
@@ -171,7 +182,6 @@
   reducedMotion.addEventListener("change", () => {
     if (reducedMotion.matches) dismiss();
   });
-  window.addEventListener("scroll", schedule, { passive: true });
-  document.addEventListener("visibilitychange", schedule);
-  observer.observe(tablist);
+  document.addEventListener("visibilitychange", reveal);
+  observer.observe(tab);
 })();
