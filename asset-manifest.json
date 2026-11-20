@@ -1,0 +1,142 @@
+{
+  "assets/01_standard.jpg": {
+    "bytes": 45787,
+    "sha256": "30c9a41c6e5f5be5f592cd934121ce4112449505220a7e68c95f0deb9c8e331b"
+  },
+  "assets/01_standard.mp4": {
+    "bytes": 12603578,
+    "sha256": "d87d67d77043cdc0a2623fe465774531568956f348be274645589b87d1ef321a"
+  },
+  "assets/02_scene_perturbation.jpg": {
+    "bytes": 55858,
+    "sha256": "f69b72b0a027f2a3d90523e6f563d1df593915cf7302e8d8c556901f09950806"
+  },
+  "assets/02_scene_perturbation.mp4": {
+    "bytes": 16100514,
+    "sha256": "461e629450eb626043217b125d5c78516b3cd57feb34ad43e7b4e9b4e6e53f95"
+  },
+  "assets/03_lighting_perturbation.jpg": {
+    "bytes": 51709,
+    "sha256": "5bc2c3c26cea5c398fc9069ab54caf1d49d524f54c4fe857967d1a27d16a2ae5"
+  },
+  "assets/03_lighting_perturbation.mp4": {
+    "bytes": 16312993,
+    "sha256": "da8cb102a6b30413081a4b720e4aa1fe8c98cc4b0d1e205fde6a00f1ed4c0b7b"
+  },
+  "assets/architecture.png": {
+    "bytes": 345234,
+    "sha256": "b85539beab3bb1ce2c8bbf33211ea8b1ab261021bf92d3c408d1ee395d68c3f5"
+  },
+  "assets/benchmark-data.json": {
+    "bytes": 11572,
+    "sha256": "dee8fc5345ec0cc519f7ec068270bb539068376ba1b704ede78262526603ea28"
+  },
+  "assets/favicon.svg": {
+    "bytes": 243,
+    "sha256": "8ca04daed954e783f6b216c83e9a6d1acb5c2fb55f3a268e994a0d3d0275166c"
+  },
+  "assets/fonts/InterVariable.woff2": {
+    "bytes": 352240,
+    "sha256": "693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3"
+  },
+  "assets/fonts/OFL.txt": {
+    "bytes": 4380,
+    "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+  },
+  "assets/genpa-paper.pdf": {
+    "bytes": 19111747,
+    "sha256": "1659cc8615fc23fd6b67354802fe0e2afd50474d39ea4249c9c92d1276254923"
+  },
+  "assets/latency-components.json": {
+    "bytes": 6325,
+    "sha256": "8fb6d284a0244f574f0c035e3b7d9e4c861cd465c0a9ef5e6b81e9f2fe48debd"
+  },
+  "assets/latency-data.json": {
+    "bytes": 2689,
+    "sha256": "d78accf30c969d9347cdbf5fde4f631364bfa0a1474adcc4fea48f9a4654fc21"
+  },
+  "assets/motivation-goal.png": {
+    "bytes": 1795598,
+    "sha256": "778fdad89bb0ea9497ea110fff117312bcca49499507f6018ddb9b55cd7e2854"
+  },
+  "assets/motivation-input.png": {
+    "bytes": 817277,
+    "sha256": "1d574b824d8cb16f12f77bba73d07c7a92d8c8483a88242e888c362ed0a4aa4c"
+  },
+  "assets/motivation-path.png": {
+    "bytes": 1870854,
+    "sha256": "94b948c5bcc4e5393c08d6a74a988deef39c076840a4eb00ec3b49c9771b0ce3"
+  },
+  "assets/supervision-data.json": {
+    "bytes": 12488,
+    "sha256": "0360349d9e93a882791838a38508a49d6c73bef67e384f4c87859d65b5a42fa5"
+  },
+  "assets/visual-targets/agent_d.png": {
+    "bytes": 3605,
+    "sha256": "ebc56699b473692d281234f3e5dfc3a7713a1f76ec29a709e14713581184a172"
+  },
+  "assets/visual-targets/agent_fd.png": {
+    "bytes": 3919,
+    "sha256": "45e86ec8af30a1b9bf50b29734fd62fece8d84fa7f9933ee40170a799f5a59e1"
+  },
+  "assets/visual-targets/agent_g.png": {
+    "bytes": 677,
+    "sha256": "43666d9d09eaacbde9e85c1531762741186112554ec6809ac71393c265d50bd9"
+  },
+  "assets/visual-targets/agent_n.png": {
+    "bytes": 16041,
+    "sha256": "4e7abf9d259b7bed8eebbfd048b6cebe7a822615310d2564ee258d250cd69d5c"
+  },
+  "assets/visual-targets/agent_p.png": {
+    "bytes": 14515,
+    "sha256": "120dbc49d2dbc2392514fa064e263c909e0062d220f7e4d77e7529dbcc9e559b"
+  },
+  "assets/visual-targets/agent_rgb_t.png": {
+    "bytes": 53325,
+    "sha256": "c17b86e73abb9844cc6e448450f65d881f3ed57216619de0ea0266143339412b"
+  },
+  "assets/visual-targets/agent_rgb_t16.png": {
+    "bytes": 55116,
+    "sha256": "6aa5dd177f86428f160853c18451a2fc105ec51f153762a0b714fd64f5ea8ffa"
+  },
+  "assets/visual-targets/agent_s.png": {
+    "bytes": 1916,
+    "sha256": "d3d18aed0286110a08f75cc61f5aac7b8484cae8caccb90034d3bed4e76d47cf"
+  },
+  "assets/visual-targets/wrist_d.png": {
+    "bytes": 6448,
+    "sha256": "670d7f6977e18308901050953bc54bd864fb33fb6a4e9341651630a0d9ea34ab"
+  },
+  "assets/visual-targets/wrist_fd.png": {
+    "bytes": 6234,
+    "sha256": "c3118f00ee2afca31852747043fa6046d8eaa89ef70dd9ea3b6d9915ae3d1d4e"
+  },
+  "assets/visual-targets/wrist_g.png": {
+    "bytes": 594,
+    "sha256": "2503ee3cd3ebd8af1f1e8afac4f751156c63b47022e82775abca9ea5c9449142"
+  },
+  "assets/visual-targets/wrist_n.png": {
+    "bytes": 11017,
+    "sha256": "06b7cfcb9d14d8a2b8213045d5ec756c69f6da10514924dffccee76f3df0bf3c"
+  },
+  "assets/visual-targets/wrist_p.png": {
+    "bytes": 13492,
+    "sha256": "d7fce066dbd606b307319314b62434abc9f3b9f629eae614f3df7dcd54ac3879"
+  },
+  "assets/visual-targets/wrist_rgb_t.png": {
+    "bytes": 51865,
+    "sha256": "4ea3d41293aae57e82a0c328296fd9a5faec7d7e6526b849b12a795c6599e5c4"
+  },
+  "assets/visual-targets/wrist_rgb_t16.png": {
+    "bytes": 60815,
+    "sha256": "3cf237f9bdacfe6c2fdfec10acb8f94e47dcc2051612b6660f5bc8de3cd7c09f"
+  },
+  "assets/visual-targets/wrist_s.png": {
+    "bytes": 1941,
+    "sha256": "926a625c2e1c2e165069804b0214c78d0f8b26b5e628c10466f98d803550ada6"
+  },
+  "assets/visual-targets.json": {
+    "bytes": 7144,
+    "sha256": "1742ab38f20fae4b594c3ce02911c68ba6d77f163fd0df4266e7364f239c7d84"
+  }
+}

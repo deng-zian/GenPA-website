@@ -1,0 +1,110 @@
+{
+  "title": "H100 native-system action-chunk latency",
+  "units": "milliseconds",
+  "display_precision": 2,
+  "sources": [
+    "GenPA manuscript tables/architecture_latency_totals.tex",
+    "GenPA manuscript tables/architecture_latency_measures.tex",
+    "GenPA manuscript evidence/latency_figure3_E10_sources.json",
+    "GenPA manuscript sections/evaluation.tex, Latency across policy architectures"
+  ],
+  "measurement": {
+    "calls_per_configuration": 600,
+    "standard_deviation": "sample standard deviation across three process means",
+    "p95": "pooled 95th percentile across calls",
+    "cached_text": "GenPA, Fast-WAM and ImageWAM exclude independently cached text encoding",
+    "comparability": "Native action horizons, preprocessing, and language caching differ. Compiled timing does not establish equal closed-loop performance. This is policy inference, not end-to-end robot latency."
+  },
+  "series": [
+    {
+      "id": "genpa",
+      "label": "GenPA",
+      "detail": "Direct regression",
+      "uncompiled": {
+        "mean_ms": 27.86,
+        "sd_ms": 0.32,
+        "p95_ms": 29.49
+      },
+      "compiled": {
+        "mean_ms": 20.94,
+        "sd_ms": 0.47,
+        "p95_ms": 21.58
+      }
+    },
+    {
+      "id": "genpa-flow",
+      "label": "GenPA (flow)",
+      "detail": "Flow action head",
+      "uncompiled": {
+        "mean_ms": 53.89,
+        "sd_ms": 0.62,
+        "p95_ms": 65.99
+      },
+      "compiled": {
+        "mean_ms": 29.22,
+        "sd_ms": 0.15,
+        "p95_ms": 29.62
+      }
+    },
+    {
+      "id": "pi05",
+      "label": "π₀.₅",
+      "detail": "",
+      "uncompiled": {
+        "mean_ms": 166.1,
+        "sd_ms": 0.96,
+        "p95_ms": 168.23
+      },
+      "compiled": {
+        "mean_ms": 36.59,
+        "sd_ms": 0.06,
+        "p95_ms": 36.8
+      }
+    },
+    {
+      "id": "oft",
+      "label": "OpenVLA-OFT",
+      "detail": "",
+      "uncompiled": {
+        "mean_ms": 72.12,
+        "sd_ms": 1.29,
+        "p95_ms": 74.6
+      },
+      "compiled": {
+        "mean_ms": 53.36,
+        "sd_ms": 0.29,
+        "p95_ms": 54.73
+      }
+    },
+    {
+      "id": "imagewam",
+      "label": "ImageWAM",
+      "detail": "",
+      "uncompiled": {
+        "mean_ms": 159.51,
+        "sd_ms": 1.69,
+        "p95_ms": 161.62
+      },
+      "compiled": {
+        "mean_ms": 57.39,
+        "sd_ms": 1.27,
+        "p95_ms": 59.89
+      }
+    },
+    {
+      "id": "fastwam",
+      "label": "Fast-WAM",
+      "detail": "",
+      "uncompiled": {
+        "mean_ms": 322.07,
+        "sd_ms": 9.53,
+        "p95_ms": 335.19
+      },
+      "compiled": {
+        "mean_ms": 71.34,
+        "sd_ms": 0.23,
+        "p95_ms": 72.28
+      }
+    }
+  ]
+}

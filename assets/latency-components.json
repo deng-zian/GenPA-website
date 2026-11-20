@@ -1,0 +1,200 @@
+{
+  "title": "H100 component profiling and independently timed totals",
+  "unit": "ms per native action chunk",
+  "sources": [
+    "GenPA manuscript tables/latency_h100_breakdown.tex",
+    "GenPA manuscript sections/appendix_efficiency.tex, Measurement Protocol and Component Profiling and Compilation",
+    "GenPA manuscript tables/architecture_latency_configs.tex",
+    "GenPA manuscript evidence/latency_figure3_E10_sources.json",
+    "GenPA E9 architecture latency audit, architecture_summary.json (2026-09-17)"
+  ],
+  "component_order": [
+    "vision",
+    "backbone",
+    "vision_backbone",
+    "action",
+    "other"
+  ],
+  "component_labels": {
+    "vision": "Vision",
+    "backbone": "Backbone",
+    "vision_backbone": "Vision + Backbone (joint)",
+    "action": "Action",
+    "other": "Other"
+  },
+  "protocol": {
+    "hardware": "NVIDIA H100 80GB HBM3, 700 W power limit",
+    "batch": 1,
+    "warmup_calls_per_process": 50,
+    "measured_calls_per_process": 200,
+    "processes": 3,
+    "total_timing": "Uninstrumented synchronized complete calls. Mean and sample SD across three process means.",
+    "components": "Nonoverlapping CUDA-event intervals inside full policy calls, measured in separate profiling passes. Components are not rescaled to independent totals.",
+    "other": "Profiled complete-call latency minus timed intervals; includes remaining preprocessing, transfers and postprocessing, not pure CPU time.",
+    "compiled_pi05": "Vision and Backbone share a captured graph and are profiled jointly. Compiled Action includes Euler updates.",
+    "uncompiled_pi05": "Action includes ten expert calls. Euler updates and loop control are in Other.",
+    "scope": "Input: decoded CPU RGB, raw proprioception, raw instruction or cached text. Output: CPU action chunk after postprocessing. Excludes file decoding, model loading, compilation, environment/robot communication.",
+    "comparability": "Native action horizons, preprocessing, caching and compilation scopes differ. These comparisons characterize measured implementations, not an isolated module causal effect or equal closed-loop performance.",
+    "genpa_flow": "Action includes flow context/cache preparation and all eight decode and Euler steps. H16, K8, batch 1, BF16; text-only across-call cache."
+  },
+  "series": [
+    {
+      "id": "genpa",
+      "label": "GenPA",
+      "horizon": 16,
+      "across_call_cache": "Text only",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 4.71,
+          "backbone": 16.04,
+          "action": 0.62,
+          "other": 6.62
+        },
+        "independent_total_ms": 27.86,
+        "independent_total_sd_ms": 0.32
+      },
+      "compiled": {
+        "components_ms": {
+          "vision": 2.29,
+          "backbone": 10.46,
+          "action": 0.46,
+          "other": 7.83
+        },
+        "independent_total_ms": 20.94,
+        "independent_total_sd_ms": 0.47
+      }
+    },
+    {
+      "id": "genpa-flow",
+      "label": "GenPA (flow)",
+      "horizon": 16,
+      "flow_steps": 8,
+      "across_call_cache": "Text only",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 4.766224623521169,
+          "backbone": 16.528777009646095,
+          "action": 25.897478857040408,
+          "other": 7.063329543125661
+        },
+        "independent_total_ms": 53.893228835,
+        "independent_total_sd_ms": 0.6190698279754747,
+        "profiled_total_ms": 54.25581003333334
+      },
+      "compiled": {
+        "components_ms": {
+          "vision": 2.21859029173851,
+          "backbone": 10.42810459136963,
+          "action": 8.815602456728618,
+          "other": 7.813085898496577
+        },
+        "independent_total_ms": 29.217793736666664,
+        "independent_total_sd_ms": 0.1533734664804801,
+        "profiled_total_ms": 29.275383238333333
+      }
+    },
+    {
+      "id": "oft",
+      "label": "OpenVLA-OFT",
+      "horizon": 8,
+      "across_call_cache": "None",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 27.57,
+          "backbone": 26.75,
+          "action": 1.05,
+          "other": 16.97
+        },
+        "independent_total_ms": 72.12,
+        "independent_total_sd_ms": 1.29
+      },
+      "compiled": {
+        "components_ms": {
+          "vision": 14.91,
+          "backbone": 21.64,
+          "action": 0.32,
+          "other": 16.7
+        },
+        "independent_total_ms": 53.36,
+        "independent_total_sd_ms": 0.29
+      }
+    },
+    {
+      "id": "pi05",
+      "label": "π₀.₅",
+      "horizon": 10,
+      "across_call_cache": "None",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 24.61,
+          "backbone": 13.58,
+          "action": 121.09,
+          "other": 7.76
+        },
+        "independent_total_ms": 166.1,
+        "independent_total_sd_ms": 0.96
+      },
+      "compiled": {
+        "components_ms": {
+          "vision_backbone": 14.09,
+          "action": 14.2,
+          "other": 8.75
+        },
+        "independent_total_ms": 36.59,
+        "independent_total_sd_ms": 0.06
+      }
+    },
+    {
+      "id": "fastwam",
+      "label": "Fast-WAM",
+      "horizon": 32,
+      "across_call_cache": "Text only",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 5.05,
+          "backbone": 32.34,
+          "action": 271.42,
+          "other": 11.81
+        },
+        "independent_total_ms": 322.07,
+        "independent_total_sd_ms": 9.53
+      },
+      "compiled": {
+        "components_ms": {
+          "vision": 4.96,
+          "backbone": 10.22,
+          "action": 45.25,
+          "other": 11.08
+        },
+        "independent_total_ms": 71.34,
+        "independent_total_sd_ms": 0.23
+      }
+    },
+    {
+      "id": "imagewam",
+      "label": "ImageWAM",
+      "horizon": 16,
+      "across_call_cache": "Text only",
+      "uncompiled": {
+        "components_ms": {
+          "vision": 4.82,
+          "backbone": 24.3,
+          "action": 121.49,
+          "other": 10.3
+        },
+        "independent_total_ms": 159.51,
+        "independent_total_sd_ms": 1.69
+      },
+      "compiled": {
+        "components_ms": {
+          "vision": 2.37,
+          "backbone": 15.78,
+          "action": 28.73,
+          "other": 10.2
+        },
+        "independent_total_ms": 57.39,
+        "independent_total_sd_ms": 1.27
+      }
+    }
+  ]
+}

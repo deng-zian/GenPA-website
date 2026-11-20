@@ -1,0 +1,480 @@
+{
+  "title": "GenPA benchmark comparisons",
+  "unit": "success rate (%)",
+  "source": "Bundled GenPA November 11 revision, Tables 1–3; existing website validation data",
+  "paper_sha256": "1659cc8615fc23fd6b67354802fe0e2afd50474d39ea4249c9c92d1276254923",
+  "benchmarks": [
+    {
+      "id": "libero",
+      "label": "LIBERO",
+      "source_table": "libero_main.tex",
+      "paper_page": 6,
+      "context": "40 tabletop manipulation tasks",
+      "finding": "GenPA has the highest average among the listed policies without additional robot-data pretraining.",
+      "note": "GenPA: checkpoint-selection evaluation. Baselines: published reports; native settings differ.",
+      "total_key": "average",
+      "columns": [
+        {
+          "key": "average",
+          "label": "Average"
+        },
+        {
+          "key": "spatial",
+          "label": "Spatial"
+        },
+        {
+          "key": "object",
+          "label": "Object"
+        },
+        {
+          "key": "goal",
+          "label": "Goal"
+        },
+        {
+          "key": "long",
+          "label": "Long"
+        }
+      ],
+      "rows": [
+        {
+          "label": "ABot-M0.5",
+          "robot_pretraining": true,
+          "values": {
+            "spatial": 100.0,
+            "object": 99.8,
+            "goal": 99.4,
+            "long": 98.4,
+            "average": 99.4
+          }
+        },
+        {
+          "label": "GenPA",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 99.4,
+            "object": 99.8,
+            "goal": 98.8,
+            "long": 98.4,
+            "average": 99.1
+          }
+        },
+        {
+          "label": "Qwen-RobotManip",
+          "robot_pretraining": true,
+          "values": {
+            "spatial": null,
+            "object": null,
+            "goal": null,
+            "long": null,
+            "average": 99.1
+          }
+        },
+        {
+          "label": "SimVLA",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 99.6,
+            "object": 99.8,
+            "goal": 98.6,
+            "long": 96.4,
+            "average": 98.6
+          }
+        },
+        {
+          "label": "LaWAM",
+          "robot_pretraining": true,
+          "values": {
+            "spatial": 99.4,
+            "object": 99.6,
+            "goal": 98.4,
+            "long": 97.0,
+            "average": 98.6
+          }
+        },
+        {
+          "label": "VLA-Adapter-Pro",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 99.6,
+            "object": 99.6,
+            "goal": 98.2,
+            "long": 96.4,
+            "average": 98.5
+          }
+        },
+        {
+          "label": "Cosmos Policy",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 98.1,
+            "object": 100.0,
+            "goal": 98.2,
+            "long": 97.6,
+            "average": 98.5
+          }
+        },
+        {
+          "label": "ImageWAM-4B",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 97.2,
+            "object": 99.2,
+            "goal": 98.8,
+            "long": 98.4,
+            "average": 98.4
+          }
+        },
+        {
+          "label": "Fast-WAM",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 98.2,
+            "object": 100.0,
+            "goal": 97.0,
+            "long": 95.2,
+            "average": 97.6
+          }
+        },
+        {
+          "label": "VLANeXt",
+          "robot_pretraining": false,
+          "values": {
+            "spatial": 99.0,
+            "object": 99.2,
+            "goal": 96.6,
+            "long": 94.8,
+            "average": 97.4
+          }
+        },
+        {
+          "label": "π₀.₅",
+          "robot_pretraining": true,
+          "values": {
+            "spatial": 98.8,
+            "object": 98.2,
+            "goal": 98.0,
+            "long": 92.4,
+            "average": 96.85
+          }
+        },
+        {
+          "label": "OpenVLA-OFT",
+          "robot_pretraining": true,
+          "values": {
+            "spatial": 97.7,
+            "object": 98.0,
+            "goal": 96.1,
+            "long": 95.3,
+            "average": 96.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "plus",
+      "label": "LIBERO-Plus",
+      "source_table": "robustness_main.tex",
+      "paper_page": 6,
+      "context": "10,030 instances · seven perturbation categories",
+      "finding": "83.79% success using the LIBERO checkpoint, without additional fine-tuning.",
+      "note": "All policies re-evaluated under Clean-Instruction. Overall success pools all 10,030 instances.",
+      "total_key": "overall",
+      "columns": [
+        {
+          "key": "overall",
+          "label": "Overall"
+        },
+        {
+          "key": "camera",
+          "label": "Camera"
+        },
+        {
+          "key": "robot_init",
+          "label": "Robot init."
+        },
+        {
+          "key": "language",
+          "label": "Language"
+        },
+        {
+          "key": "lighting",
+          "label": "Lighting"
+        },
+        {
+          "key": "background",
+          "label": "Background"
+        },
+        {
+          "key": "noise",
+          "label": "Noise"
+        },
+        {
+          "key": "layout",
+          "label": "Layout"
+        }
+      ],
+      "rows": [
+        {
+          "label": "π₀.₅",
+          "robot_pretraining": true,
+          "values": {
+            "camera": 72.23,
+            "robot_init": 79.61,
+            "language": 86.21,
+            "lighting": 96.67,
+            "background": 96.47,
+            "noise": 89.76,
+            "layout": 86.75,
+            "overall": 85.9
+          }
+        },
+        {
+          "label": "Cosmos Policy",
+          "robot_pretraining": false,
+          "values": {
+            "camera": 80.24,
+            "robot_init": 64.97,
+            "language": 88.29,
+            "lighting": 99.12,
+            "background": 88.85,
+            "noise": 95.07,
+            "layout": 87.15,
+            "overall": 85.6
+          }
+        },
+        {
+          "label": "GenPA",
+          "robot_pretraining": false,
+          "values": {
+            "camera": 81.8,
+            "robot_init": 67.94,
+            "language": 84.97,
+            "lighting": 97.99,
+            "background": 82.43,
+            "noise": 92.88,
+            "layout": 81.57,
+            "overall": 83.79
+          }
+        },
+        {
+          "label": "VLANeXt",
+          "robot_pretraining": false,
+          "values": {
+            "camera": 89.49,
+            "robot_init": 62.77,
+            "language": 79.18,
+            "lighting": 95.1,
+            "background": 89.22,
+            "noise": 95.57,
+            "layout": 77.9,
+            "overall": 83.6
+          }
+        },
+        {
+          "label": "ImageWAM",
+          "robot_pretraining": false,
+          "values": {
+            "camera": 79.36,
+            "robot_init": 50.19,
+            "language": 91.28,
+            "lighting": 97.55,
+            "background": 88.48,
+            "noise": 95.19,
+            "layout": 78.56,
+            "overall": 82.13
+          }
+        },
+        {
+          "label": "OpenVLA-OFT",
+          "robot_pretraining": true,
+          "values": {
+            "camera": 64.73,
+            "robot_init": 28.32,
+            "language": 87.12,
+            "lighting": 95.36,
+            "background": 89.59,
+            "noise": 76.83,
+            "layout": 72.2,
+            "overall": 71.75
+          }
+        },
+        {
+          "label": "Fast-WAM",
+          "robot_pretraining": false,
+          "values": {
+            "camera": 46.4,
+            "robot_init": 72.39,
+            "language": 67.86,
+            "lighting": 97.11,
+            "background": 66.91,
+            "noise": 69.52,
+            "layout": 78.3,
+            "overall": 70.22
+          }
+        }
+      ]
+    },
+    {
+      "id": "robotwin",
+      "label": "RoboTwin 2.0",
+      "source_table": "robotwin_main.tex",
+      "paper_page": 7,
+      "context": "50 bimanual tasks · 10,000 evaluation trials",
+      "finding": "91.45% average success across Clean and Randomized conditions.",
+      "note": "GenPA uses a wider action adapter for bimanual control. Baseline scores are from published reports.",
+      "total_key": "average",
+      "columns": [
+        {
+          "key": "average",
+          "label": "Average"
+        },
+        {
+          "key": "clean",
+          "label": "Clean"
+        },
+        {
+          "key": "randomized",
+          "label": "Randomized"
+        }
+      ],
+      "rows": [
+        {
+          "label": "ImageWAM",
+          "robot_pretraining": false,
+          "values": {
+            "clean": 93.2,
+            "randomized": 93.56,
+            "average": 93.38
+          }
+        },
+        {
+          "label": "Qwen-RobotManip",
+          "robot_pretraining": true,
+          "values": {
+            "clean": 93.4,
+            "randomized": 92.5,
+            "average": 93.0
+          }
+        },
+        {
+          "label": "Fast-WAM",
+          "robot_pretraining": false,
+          "values": {
+            "clean": 91.88,
+            "randomized": 91.78,
+            "average": 91.83
+          }
+        },
+        {
+          "label": "GenPA",
+          "robot_pretraining": false,
+          "values": {
+            "clean": 92.08,
+            "randomized": 90.82,
+            "average": 91.45
+          }
+        },
+        {
+          "label": "Motus",
+          "robot_pretraining": true,
+          "values": {
+            "clean": 88.66,
+            "randomized": 87.02,
+            "average": 87.84
+          }
+        },
+        {
+          "label": "π₀.₅",
+          "robot_pretraining": true,
+          "values": {
+            "clean": 82.74,
+            "randomized": 76.76,
+            "average": 79.75
+          }
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "training_runs": {
+      "seeds": [
+        42,
+        142,
+        242
+      ],
+      "unit": "success rate (%)",
+      "standard_deviation": "sample SD across three training runs",
+      "rows": [
+        {
+          "label": "Action only",
+          "libero": [
+            98.8,
+            0.22
+          ],
+          "plus_clean": [
+            79.49,
+            0.85
+          ],
+          "plus_official": [
+            74.63,
+            4.03
+          ]
+        },
+        {
+          "label": "GenPA · current depth",
+          "libero": [
+            98.87,
+            0.25
+          ],
+          "plus_clean": [
+            82.33,
+            1.27
+          ],
+          "plus_official": [
+            78.67,
+            3.97
+          ]
+        },
+        {
+          "label": "Future RGB supervision",
+          "libero": [
+            98.68,
+            0.1
+          ],
+          "plus_clean": [
+            81.8,
+            2.05
+          ],
+          "plus_official": [
+            77.74,
+            6.57
+          ]
+        }
+      ]
+    },
+    "independent_libero": {
+      "mean": 98.33,
+      "sd": 0.29,
+      "evaluation_seeds": 3,
+      "episodes": 6000,
+      "policy": "Fixed training-seed-42 current-depth checkpoint; no reselection"
+    },
+    "selected_policy": {
+      "training_seed": 42,
+      "step": 32000,
+      "libero": 99.1,
+      "plus_clean": 83.79,
+      "plus_official": 83.01,
+      "successes": [
+        1982,
+        8404,
+        8326
+      ],
+      "counts": [
+        2000,
+        10030,
+        10030
+      ]
+    }
+  }
+}

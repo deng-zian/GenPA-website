@@ -1,0 +1,3252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="GenPA adapts image generation priors into robot actions, compares visual supervision through a shared interface, and studies the architecture of efficient control."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <title>GenPA · Image Generators as Efficient Robot Policies</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css?v=180deddb6d" />
+    <script src="script.js?v=d60e89a1b1" defer></script>
+    <script src="animation.js?v=b0e70ea49a" defer></script>
+    <script src="navigation.js?v=0a8950c6c8" defer></script>
+    <script src="gallery.js?v=053d9e728d" defer></script>
+    <script src="latency.js?v=4d739154b5" defer></script>
+    <script src="method-tabs.js?v=401295a0a2" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <main id="main">
+      <section class="hero wrap">
+        <h1
+          ><span class="hero-brand">GenPA</span
+          ><span class="hero-title">Image Generators as Efficient Robot Policies</span></h1
+        >
+        <div class="hero-credits" aria-label="Paper authors and affiliations"
+          ><div class="hero-authors"
+            ><span class="hero-author"
+              ><a
+                href="https://openreview.net/profile?id=~Zian_Deng1"
+                target="_blank"
+                rel="noopener"
+                >Zian Deng</a
+              ><sup data-affiliation-compact="1,2" data-affiliation-full="1,2">1,2</sup></span
+            ><span class="hero-author"
+              ><a
+                href="https://openreview.net/profile?id=~Tianyi_Zhang26"
+                target="_blank"
+                rel="noopener"
+                >Tianyi Zhang</a
+              ><sup data-affiliation-compact="3" data-affiliation-full="3">3</sup></span
+            ><span class="hero-author"
+              ><a
+                href="https://openreview.net/profile?id=~Zilong_Zheng3"
+                target="_blank"
+                rel="noopener"
+                >Zilong Zheng</a
+              ><sup data-affiliation-compact="4" data-affiliation-full="4">4</sup></span
+            ><span class="hero-author"
+              ><a href="https://openreview.net/profile?id=~liuziyu1" target="_blank" rel="noopener"
+                >Ziyu Liu</a
+              ><sup data-affiliation-compact="5" data-affiliation-full="5">5</sup></span
+            ><span class="hero-author"
+              ><a
+                href="https://openreview.net/profile?id=~Tao_Zhang40"
+                target="_blank"
+                rel="noopener"
+                >Tao Zhang</a
+              ><sup data-affiliation-compact="5" data-affiliation-full="5">5</sup></span
+            ><span class="hero-author"
+              ><a href="https://openreview.net/profile?id=~Yao_Lyu1" target="_blank" rel="noopener"
+                >Yao Lyu</a
+              ><sup data-affiliation-compact="3,†" data-affiliation-full="3,†">3,†</sup></span
+            ><span class="hero-author"
+              ><a
+                href="https://openreview.net/profile?id=~Shengbo_Eben_Li2"
+                target="_blank"
+                rel="noopener"
+                >Shengbo Eben Li</a
+              ><sup data-affiliation-compact="3,†" data-affiliation-full="3,6,†">3,†</sup></span
+            ></div
+          ><div id="compact-affiliations" class="hero-affiliations hero-affiliations-compact"
+            ><span><sup>1</sup> Fudan University</span
+            ><span><sup>2</sup> Beijing Zhongguancun Academy</span
+            ><span><sup>3</sup> Tsinghua University</span
+            ><span><sup>4</sup> Delft University of Technology</span
+            ><span><sup>5</sup> SunRising AI Ltd.</span></div
+          ><ol id="full-affiliations" class="hero-affiliation-list" hidden
+            ><li>College of Computer Science and Artificial Intelligence, Fudan University</li
+            ><li>Beijing Zhongguancun Academy</li
+            ><li>School of Vehicle and Mobility, Tsinghua University</li
+            ><li>Faculty of Mechanical Engineering, Delft University of Technology</li
+            ><li>SunRising AI Ltd.</li
+            ><li>College of Artificial Intelligence, Tsinghua University</li></ol
+          ><div class="hero-credit-notes"
+            ><p class="hero-author-note">† Corresponding authors</p
+            ><button
+              type="button"
+              class="hero-affiliations-toggle"
+              aria-expanded="false"
+              aria-controls="compact-affiliations full-affiliations"
+              ><span>Full affiliations</span
+              ><svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path d="m4 6 4 4 4-4" /></svg></button></div
+        ></div>
+        <div class="hero-actions hero-resource-actions" aria-label="Project resources"
+          ><a class="button primary" href="assets/genpa-paper.pdf" target="_blank" rel="noopener"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              aria-hidden="true"
+            >
+              <path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6" /></svg
+            >Paper</a
+          ><button
+            class="button resource-unavailable"
+            type="button"
+            disabled
+            title="The public code release is in preparation"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+            >
+              <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" /></svg
+            >Code <span>Coming soon</span></button
+          ><button
+            class="button resource-unavailable"
+            type="button"
+            disabled
+            title="Public model checkpoints are in preparation"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              aria-hidden="true"
+            >
+              <path d="m12 2 9 5v10l-9 5-9-5V7zm0 10L3 7m9 5 9-5m-9 5v10M7.5 4.5l9 5" /></svg
+            >Models <span>Coming soon</span></button
+          ><button
+            class="button resource-unavailable"
+            type="button"
+            disabled
+            title="The public dataset release is in preparation"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              aria-hidden="true"
+            >
+              <ellipse cx="12" cy="5" rx="8" ry="3" />
+              <path
+                d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"
+              /></svg
+            >Dataset <span>Coming soon</span></button
+          ></div
+        ><div class="hero-secondary-links"
+          ><a href="https://openreview.net/forum?id=WA0THUR3x9" target="_blank" rel="noopener"
+            >OpenReview ↗</a
+          ></div
+        >
+        <p class="hero-abstract"
+          >GenPA adapts a pretrained image generator into an efficient robot policy, using its
+          native image-editing interface to study diverse visual supervision within one
+          architecture. Current-scene supervision supports effective control without requiring
+          future visual prediction. At deployment, the policy directly regresses actions in a single
+          backbone pass, achieving strong results on LIBERO, LIBERO-Plus, and RoboTwin 2.0 with 20.9
+          ms compiled inference per action chunk on an NVIDIA H100.</p
+        >
+      </section>
+      <header class="nav-wrap"
+        ><nav class="nav" aria-label="Main navigation"
+          ><a class="nav-home" href="#main" aria-label="GenPA home">GenPA</a
+          ><div class="nav-links"
+            ><a href="#overview" aria-current="location">Overview</a><a href="#method">Method</a
+            ><a href="#results">Results</a><a href="#demos">Demos</a><a href="#citation">Citation</a
+            ><a href="#resources">Resources</a></div
+          ></nav
+        ></header
+      >
+
+      <div class="wrap overview-wrap" id="overview"
+        ><section
+          class="gph-module"
+          id="genpa-how-it-works"
+          data-mode="training"
+          aria-labelledby="gph-title"
+        >
+          <div class="gph-header"
+            ><h2 id="gph-title">Train together. Act in one pass.</h2
+            ><div class="gph-switch" role="tablist" aria-label="Training or inference"
+              ><button
+                type="button"
+                id="gph-training-tab"
+                role="tab"
+                aria-selected="true"
+                aria-controls="gph-diagram"
+                data-gph-mode="training"
+                tabindex="0"
+                >Training</button
+              ><button
+                type="button"
+                id="gph-inference-tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="gph-diagram"
+                data-gph-mode="inference"
+                tabindex="-1"
+                >Inference</button
+              ></div
+            ></div
+          >
+          <div
+            class="gph-diagram"
+            id="gph-diagram"
+            role="tabpanel"
+            aria-labelledby="gph-training-tab"
+          >
+            <div class="gph-rail gph-action-rail" data-gph-rail="action">
+              <svg class="gph-paths" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker
+                    id="gph-action-arrow"
+                    viewBox="0 0 8 8"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="6"
+                    refY="4"
+                    orient="auto"
+                  >
+                    <path
+                      d="M2 1 L6 4 L2 7"
+                      fill="none"
+                      stroke="#879b75"
+                      stroke-width="1.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </marker>
+                </defs>
+                <path
+                  marker-end="url(#gph-action-arrow)"
+                  class="gph-base-path"
+                  data-gph-path="input-core"
+                />
+                <path
+                  marker-end="url(#gph-action-arrow)"
+                  class="gph-base-path"
+                  data-gph-path="core-adapter"
+                />
+                <path
+                  marker-end="url(#gph-action-arrow)"
+                  class="gph-base-path"
+                  data-gph-path="adapter-output"
+                />
+              </svg>
+              <div class="gph-output gph-action-output" data-gph-node="output"
+                ><h3 data-gph-action-label>Action supervision</h3
+                ><div class="gph-action-sequence" aria-hidden="true"
+                  ><span>a₁</span><i></i><span>a₂</span><i></i><span>···</span><i></i
+                  ><span>a₁₆</span></div
+                ></div
+              >
+              <div class="gph-adapter" data-gph-node="adapter"
+                ><strong>19M</strong><span>Action adapter</span></div
+              >
+              <div class="gph-core" data-gph-node="core"
+                ><div class="gph-model-name"><strong>FLUX.2</strong><span>klein Base</span></div
+                ><span class="gph-model-size">4B</span></div
+              >
+              <div class="gph-input gph-action-input" data-gph-node="input"
+                ><figure class="gph-observation"
+                  ><img
+                    src="assets/visual-targets/agent_rgb_t.png"
+                    alt="Current RGB observation from a LIBERO demonstration"
+                    width="256"
+                    height="256"
+                  /><figcaption>Observation</figcaption></figure
+                ><div class="gph-input-copy"
+                  ><span class="gph-prompt-label">Task prompt</span
+                  ><p>“Put the milk in the basket.”</p></div
+                ></div
+              >
+            </div>
+            <div class="gph-rail gph-perception-rail" data-gph-rail="perception">
+              <svg class="gph-paths" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker
+                    id="gph-perception-arrow"
+                    viewBox="0 0 8 8"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="6"
+                    refY="4"
+                    orient="auto"
+                  >
+                    <path
+                      d="M2 1 L6 4 L2 7"
+                      fill="none"
+                      stroke="#879b75"
+                      stroke-width="1.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </marker>
+                </defs>
+                <path
+                  marker-end="url(#gph-perception-arrow)"
+                  class="gph-base-path"
+                  data-gph-path="input-core"
+                />
+                <path
+                  marker-end="url(#gph-perception-arrow)"
+                  class="gph-base-path"
+                  data-gph-path="core-output"
+                />
+              </svg>
+              <div class="gph-output gph-visual-output" data-gph-node="output"
+                ><h3>Visual supervision</h3
+                ><div class="gph-carousel" aria-label="Visual supervision targets"
+                  ><button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="D"
+                    data-active="true"
+                    data-distance="0"
+                    style="--offset: 0"
+                    aria-pressed="true"
+                    tabindex="0"
+                    aria-label="Select Depth supervision"
+                    ><img
+                      src="assets/visual-targets/agent_d.png"
+                      alt="Depth supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Depth</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="N"
+                    data-active="false"
+                    data-distance="1"
+                    style="--offset: 1"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Normals supervision"
+                    ><img
+                      src="assets/visual-targets/agent_n.png"
+                      alt="Normals supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Normals</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="P"
+                    data-active="false"
+                    data-distance="2"
+                    style="--offset: 2"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Pointmaps supervision"
+                    ><img
+                      src="assets/visual-targets/agent_p.png"
+                      alt="Pointmaps supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Pointmaps</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="S"
+                    data-active="false"
+                    data-distance="3"
+                    style="--offset: 3"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Segmentation supervision"
+                    ><img
+                      src="assets/visual-targets/agent_s.png"
+                      alt="Segmentation supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Segmentation</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="G"
+                    data-active="false"
+                    data-distance="3"
+                    style="--offset: -3"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Grounding supervision"
+                    ><img
+                      src="assets/visual-targets/agent_g.png"
+                      alt="Grounding supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Grounding</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="F"
+                    data-active="false"
+                    data-distance="2"
+                    style="--offset: -2"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Future RGB supervision"
+                    ><img
+                      src="assets/visual-targets/agent_rgb_t16.png"
+                      alt="Future RGB supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Future RGB</span></button
+                  >
+                  <button
+                    type="button"
+                    class="gph-target-card"
+                    data-gph-target="FD"
+                    data-active="false"
+                    data-distance="1"
+                    style="--offset: -1"
+                    aria-pressed="false"
+                    tabindex="-1"
+                    aria-label="Select Future depth supervision"
+                    ><img
+                      src="assets/visual-targets/agent_fd.png"
+                      alt="Future depth supervision target"
+                      width="256"
+                      height="256"
+                    /><span>Future depth</span></button
+                  ></div
+                ><div class="gph-carousel-controls"
+                  ><button type="button" data-gph-prev aria-label="Previous supervision target"
+                    ><svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m14 6-6 6 6 6M8 12h12" /></svg></button
+                  ><span data-gph-target-position aria-live="polite">1 / 7</span
+                  ><button type="button" data-gph-next aria-label="Next supervision target"
+                    ><svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m10 6 6 6-6 6M16 12H4" /></svg></button></div
+              ></div>
+              <div class="gph-core" data-gph-node="core"
+                ><div class="gph-model-name"><strong>FLUX.2</strong><span>klein Base</span></div
+                ><span class="gph-model-size">4B</span></div
+              >
+              <div class="gph-input gph-perception-input" data-gph-node="input"
+                ><figure class="gph-observation"
+                  ><img
+                    src="assets/visual-targets/agent_rgb_t.png"
+                    alt="The same RGB observation used by the action path"
+                    width="256"
+                    height="256"
+                  /><figcaption>Same observation</figcaption></figure
+                ><div class="gph-input-copy"
+                  ><span class="gph-prompt-label">Perception prompt</span
+                  ><p data-gph-perception-prompt>“Estimate the depth of this scene.”</p></div
+                ></div
+              >
+            </div>
+            <div class="gph-shared" data-gph-shared
+              ><svg aria-hidden="true" focusable="false"><path data-gph-shared-line /></svg
+              ><span class="gph-shared-label">Shared weights</span></div
+            >
+          </div>
+          <div class="gph-caption"
+            ><p data-gph-summary
+              >Separate action and perception forwards jointly update the shared backbone.</p
+            ></div
+          >
+          <p class="gph-status" role="status" aria-live="polite" data-gph-status></p>
+          <noscript
+            ><p class="gph-fallback"
+              >Training uses separate action and perception forwards with shared weights. Inference
+              retains only the action path through FLUX.2 klein Base 4B and the 19M action head. The
+              depth image illustrates a supervision target.</p
+            ></noscript
+          >
+        </section>
+      </div>
+
+      <section id="motivation" class="section wrap motivation-section">
+        <div class="section-top"
+          ><span class="section-number">OVERVIEW</span><span class="section-rule"></span
+        ></div>
+        <div class="section-intro"
+          ><h2>Visual supervision<br />beyond future prediction.</h2
+          ><p
+            >Image generators can depict goals and sketch motion. Can their visual knowledge also
+            support direct robot control?</p
+          ></div
+        >
+        <div class="motivation-switch" role="group" aria-label="Illustrative image edit"
+          ><button type="button" data-motivation-view="goal" aria-pressed="true"
+            >Imagine the goal</button
+          ><button type="button" data-motivation-view="path" aria-pressed="false"
+            >Sketch the motion</button
+          ></div
+        >
+        <div class="motivation-images">
+          <figure class="motivation-input"
+            ><span class="small-label">Input</span
+            ><img
+              src="assets/motivation-input.png"
+              alt="Original ALOHA tabletop scene with a green spoon, white fork, and colored bowls."
+              width="1280"
+              height="720"
+              loading="lazy"
+            /><figcaption
+              ><p class="motivation-prompt"
+                ><span class="prompt-label">Editing prompt</span
+                ><q data-motivation-short
+                  >Show the scene with the green spoon in the pink bowl and the white fork in the
+                  yellow-orange bowl.</q
+                ></p
+              ></figcaption
+            ></figure
+          >
+          <div class="motivation-output"
+            ><span class="small-label" data-motivation-result-label>Generated goal state</span>
+            <div class="motivation-frame">
+              <figure data-motivation-panel="goal"
+                ><img
+                  src="assets/motivation-goal.png"
+                  alt="Illustrative generated scene placing the spoon and fork into the instructed bowls."
+                  width="1672"
+                  height="941"
+                  loading="lazy"
+              /></figure>
+              <figure data-motivation-panel="path" hidden
+                ><img
+                  src="assets/motivation-path.png"
+                  alt="Illustrative generated motion sketch showing dashed end-effector paths between utensils and bowls."
+                  width="1672"
+                  height="941"
+                  loading="lazy"
+              /></figure>
+            </div>
+            <div class="illustration-details"
+              ><div class="illustration-disclosure"
+                ><button type="button" aria-expanded="false" aria-controls="motivation-full"
+                  >Full prompt</button
+                ><div class="illustration-popover" id="motivation-full" hidden
+                  ><p data-motivation-full
+                    >Edit this photograph to show the scene after the robot has put the green spoon
+                    into the pink bowl and the white fork into the yellow-orange bowl. Keep the
+                    other utensils, cups, bowls, background, and camera view unchanged. Each moved
+                    object must appear exactly once. Return only the edited scene.</p
+                  ></div
+                ></div
+              ><div class="illustration-disclosure illustration-sources"
+                ><button type="button" aria-expanded="false" aria-controls="motivation-sources"
+                  >About this illustration</button
+                ><div class="illustration-popover" id="motivation-sources" hidden
+                  ><p
+                    >Illustrative edits generated with GPT Image 2, as documented in the paper;
+                    these are not GenPA predictions or robot execution results. Both use the same
+                    frame from the
+                    <a
+                      href="https://aloha-unleashed.github.io/assets/KitchenStack4x.mp4"
+                      target="_blank"
+                      rel="noopener"
+                      >Random Kitchen video</a
+                    >
+                    by
+                    <a href="https://aloha-unleashed.github.io/" target="_blank" rel="noopener"
+                      >ALOHA Unleashed</a
+                    >. Displayed editing requests are abbreviated; full prompts follow the paper’s
+                    Generation Details for Figure 1 appendix.</p
+                  ></div
+                ></div
+              ></div
+            >
+          </div>
+        </div>
+        <script id="motivation-prompts" type="application/json">
+          {
+            "goal": "Edit this photograph to show the scene after the robot has put the green spoon into the pink bowl and the white fork into the yellow-orange bowl. Keep the other utensils, cups, bowls, background, and camera view unchanged. Each moved object must appear exactly once. Return only the edited scene.",
+            "path": "On this photograph, sketch how the robot would pick up the green spoon and place it into the pink bowl, then pick up the white fork and place it into the yellow-orange bowl. Use dashed, one-way arrows that follow each movement from the gripper to the utensil and then to its destination. Keep the photograph unchanged."
+          }
+        </script>
+        <div class="research-question" data-scroll-reveal
+          ><p
+            >This leads to our question: how can we turn an image generator’s visual knowledge into
+            a policy, and use its native visual interface to study what supervision helps
+            control?</p
+          ></div
+        >
+      </section>
+
+      <section id="method" class="section wrap">
+        <div class="section-top"
+          ><span class="section-number">METHOD</span><span class="section-rule"></span
+        ></div>
+        <div class="section-intro"
+          ><h2>One backbone for<br />action and perception.</h2
+          ><p
+            >GenPA reuses FLUX.2 klein Base 4B’s native image-editing interface for diverse visual
+            supervision within one policy architecture. Visual and action objectives jointly train
+            the shared backbone for direct action regression.</p
+          ></div
+        >
+        <div class="method-explorer">
+          <div class="method-view-tabs" role="tablist" aria-label="Explore the method" hidden>
+            <button
+              type="button"
+              id="method-architecture-tab"
+              role="tab"
+              aria-selected="true"
+              aria-controls="method-architecture-panel"
+              tabindex="0"
+              data-method-view="architecture"
+              >Architecture</button
+            >
+            <button
+              type="button"
+              id="method-supervision-tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="method-supervision-panel"
+              tabindex="-1"
+              data-method-view="supervision"
+              >Visual supervision</button
+            >
+          </div>
+          <div class="method-view-panels">
+            <div
+              class="method-view-panel"
+              id="method-architecture-panel"
+              role="tabpanel"
+              aria-labelledby="method-architecture-tab"
+              tabindex="0"
+              data-method-panel="architecture"
+            >
+              <div class="hero-facts" aria-label="Method at a glance"
+                ><div
+                  ><strong>1</strong><span>backbone forward<br />per action chunk</span></div
+                ><div
+                  ><strong>19<span>M</span></strong
+                  ><span>action adapter parameters<br />LIBERO configuration</span></div
+                ><div
+                  ><strong>20.9<span>ms</span></strong
+                  ><span>compiled inference on H100<br />cached instruction embeddings</span></div
+                ></div
+              >
+              <figure class="hero-figure"
+                ><a
+                  href="assets/architecture.png"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="View full-size GenPA architecture diagram"
+                  ><img
+                    src="assets/architecture.png"
+                    alt="Two training paths share the FLUX.2 backbone. The action path maps observations and instructions to action chunks. The perception path predicts image-form visual targets. Only the action path is used at deployment."
+                    width="2200"
+                    height="779"
+                    loading="lazy" /></a
+              ></figure>
+              <div class="method-grid">
+                <article
+                  ><div class="method-step-heading"
+                    ><span class="method-icon" aria-hidden="true">01</span
+                    ><h3>Direct action regression</h3></div
+                  ><p
+                    >The backbone combines camera observations with the task instruction. A
+                    <strong>19M action adapter</strong> uses its visual features and the robot state
+                    to directly regress an action chunk.</p
+                  ></article
+                >
+                <article
+                  ><div class="method-step-heading"
+                    ><span class="method-icon" aria-hidden="true">02</span
+                    ><h3>Native visual supervision</h3></div
+                  ><p
+                    >A separate visual forward reuses the generator’s native objective, without
+                    task-specific perception heads. Both losses
+                    <strong>update the shared backbone</strong>.</p
+                  ></article
+                >
+                <article
+                  ><div class="method-step-heading"
+                    ><span class="method-icon" aria-hidden="true">03</span
+                    ><h3>One-pass inference</h3></div
+                  ><p
+                    >Only the action path runs at deployment: <strong>one backbone forward</strong>,
+                    with no image generation or iterative action denoising.</p
+                  ></article
+                >
+              </div>
+            </div>
+            <div
+              class="method-view-panel"
+              id="method-supervision-panel"
+              role="tabpanel"
+              aria-labelledby="method-supervision-tab"
+              tabindex="0"
+              data-method-panel="supervision"
+            >
+              <section class="gpv-gallery" id="visual-targets" aria-labelledby="gpv-title">
+                <div class="gpv-heading">
+                  <div><h3 id="gpv-title">Training targets for visual supervision</h3></div>
+                  <div class="gpv-controls">
+                    <div class="gpv-camera" role="group" aria-label="Supervision camera view">
+                      <button type="button" data-gpv-view="agent" aria-pressed="true"
+                        >Agent view</button
+                      >
+                      <button type="button" data-gpv-view="wrist" aria-pressed="false"
+                        >Wrist view</button
+                      >
+                    </div>
+                    <button type="button" class="gpv-show-all" data-gpv-all aria-pressed="false"
+                      ><span data-gpv-all-label>Show all targets</span
+                      ><svg viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M4 10h12m-5-5 5 5-5 5" /></svg
+                    ></button>
+                  </div>
+                </div>
+                <div class="gpv-grid">
+                  <figure class="gpv-card" data-gpv-card="D">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Depth visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_d.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                      <svg class="gpv-demo-cursor" viewBox="0 0 24 32" aria-hidden="true">
+                        <path
+                          d="M3 2v22l5.8-5.6 4.4 10.2 4-1.7-4.4-10.1H21Z"
+                          fill="#161616"
+                          stroke="#fff"
+                          stroke-width="1.4"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <figcaption><h4>Depth</h4><p>Distance from the camera</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="N">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Surface normals visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_n.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption><h4>Surface normals</h4><p>Surface orientation</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="P">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Pointmaps visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_p.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption><h4>Pointmaps</h4><p>3D position in the robot frame</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="S">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Segmentation visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_s.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption><h4>Segmentation</h4><p>Semantic parts of the scene</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="G">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Grounding visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_g.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption><h4>Grounding</h4><p>The object and its goal</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="F">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Future RGB visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_rgb_t16.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption><h4>Future RGB</h4><p>Scene after 16 action steps</p></figcaption>
+                  </figure>
+                  <figure class="gpv-card" data-gpv-card="FD">
+                    <div
+                      class="gpv-reveal"
+                      tabindex="0"
+                      role="img"
+                      aria-label="Future depth visual supervision preview — agent view"
+                    >
+                      <img
+                        class="gpv-observation"
+                        src="assets/visual-targets/agent_rgb_t.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <img
+                        class="gpv-target"
+                        src="assets/visual-targets/agent_fd.png"
+                        width="256"
+                        height="256"
+                        loading="lazy"
+                        alt=""
+                      />
+                      <span class="gpv-image-label gpv-label-input" aria-hidden="true">RGB</span>
+                      <span class="gpv-image-label gpv-label-target" aria-hidden="true"
+                        >Target</span
+                      >
+                    </div>
+                    <figcaption
+                      ><h4>Future depth</h4><p>Geometry of the future scene</p></figcaption
+                    >
+                  </figure>
+                </div>
+                <div class="gpv-footnote"
+                  ><p
+                    >LIBERO demonstration · Task: “Pick up the milk and place it in the basket.”</p
+                  ></div
+                >
+                <p class="gpv-status" role="status" aria-live="polite" data-gpv-status
+                  >Showing RGB observations from the agent view.</p
+                >
+                <script id="visual-target-data" type="application/json">
+                  {
+                    "schema_version": 1,
+                    "title": "Visual supervision targets",
+                    "caption": "Aligned agent and wrist views from a LIBERO demonstration. These are simulator-derived training targets, not GenPA predictions; the deployed policy receives RGB observations, not these target maps.",
+                    "task_instruction": "Pick up the milk and place it in the basket.",
+                    "source": {
+                      "paper_section": "sections/visual_supervision_details.tex",
+                      "paper_figure_label": "fig:appendix-visual-targets",
+                      "source_note": "Existing original 256 × 256 panels used in the manuscript; image pixels are unchanged."
+                    },
+                    "views": [
+                      {
+                        "id": "agent",
+                        "label": "Agent view",
+                        "reference_image": "agent_rgb_t.png"
+                      },
+                      { "id": "wrist", "label": "Wrist view", "reference_image": "wrist_rgb_t.png" }
+                    ],
+                    "targets": [
+                      {
+                        "id": "D",
+                        "label": "Current depth",
+                        "description": "Optical-axis depth is encoded in grayscale with a fixed log-inverse mapping: nearer surfaces are brighter.",
+                        "legend": "The preview is a rounded display of a floating-point training target, not raw depth in meters. The fixed LIBERO mapping clips depths to 0.04–3.5 m and is shared across frames and cameras.",
+                        "images": { "agent": "agent_d.png", "wrist": "wrist_d.png" }
+                      },
+                      {
+                        "id": "N",
+                        "label": "Surface normals",
+                        "description": "RGB encodes the X, Y, and Z components of surface normals in the camera coordinate frame.",
+                        "legend": "Camera axes are +X right, +Y down, and +Z forward; normals are oriented toward the camera. Each component maps from −1…+1 to 0…255. Black marks excluded or invalid neighborhoods, not a surface orientation.",
+                        "images": { "agent": "agent_n.png", "wrist": "wrist_n.png" }
+                      },
+                      {
+                        "id": "P",
+                        "label": "Robot-frame pointmaps",
+                        "description": "RGB encodes the X, Y, and Z coordinates of visible surface points in the robot-base frame.",
+                        "legend": "The fixed coordinate encoding is shared across frames and cameras. Central X/Y/Z intervals are [−0.25,1.00], [−0.45,0.50], and [−0.10,0.50] m, mapped to codes 16…240, with smooth tails outside these intervals. Black marks invalid points; these colors are coordinates, not object classes.",
+                        "images": { "agent": "agent_p.png", "wrist": "wrist_p.png" }
+                      },
+                      {
+                        "id": "S",
+                        "label": "Semantic-part segmentation",
+                        "description": "A fixed color palette identifies semantic parts throughout the scene, including objects, robot parts, and articulated parts.",
+                        "legend": "The 37-class ontology and palette are shared across all four LIBERO suites and both cameras; same-class instances share a color. This is task-independent semantic labeling, not per-instance random coloring.",
+                        "images": { "agent": "agent_s.png", "wrist": "wrist_s.png" }
+                      },
+                      {
+                        "id": "G",
+                        "label": "Task-conditioned grounding",
+                        "description": "RGB marks the operation object, goal or anchor, and active articulated part for the current demonstration stage.",
+                        "legend": "Red = operation object; green = goal or anchor; blue = active articulated part. Roles are independent and overlapping roles blend colors. Black = no assigned role at that pixel. In this example the agent view shows red milk and green basket; the wrist view shows only red milk. No blue active-part pixels appear in either view.",
+                        "images": { "agent": "agent_g.png", "wrist": "wrist_g.png" }
+                      },
+                      {
+                        "id": "F",
+                        "label": "Future RGB",
+                        "description": "The RGB target shows the demonstration scene 16 retained action steps into the future, using the current RGB observation as reference.",
+                        "legend": "The offset counts retained steps after no-op filtering, not necessarily original simulator frames; the target clips to the final retained frame near the trajectory end.",
+                        "images": { "agent": "agent_rgb_t16.png", "wrist": "wrist_rgb_t16.png" }
+                      },
+                      {
+                        "id": "FD",
+                        "label": "Future depth",
+                        "description": "The depth target uses the same future state as Future RGB and the same fixed depth encoding as Current depth.",
+                        "legend": "Future depth is one supervision task, not the combination of current depth and future RGB. Its PNG is a rounded display preview of the floating-point target.",
+                        "images": { "agent": "agent_fd.png", "wrist": "wrist_fd.png" }
+                      }
+                    ],
+                    "display_notes": [
+                      "Use the same image scale for reference and target panels; do not apply per-image contrast normalization.",
+                      "Do not add a linear metric-depth colorbar to the grayscale previews. A short Nearer → brighter legend is sufficient.",
+                      "Keep target colors unchanged; normals, pointmaps, semantic parts, and grounding have different color meanings.",
+                      "Future RGB and future depth share one future source state."
+                    ],
+                    "verified_assets": [
+                      {
+                        "filename": "agent_rgb_t.png",
+                        "sha256": "c17b86e73abb9844cc6e448450f65d881f3ed57216619de0ea0266143339412b"
+                      },
+                      {
+                        "filename": "agent_d.png",
+                        "sha256": "ebc56699b473692d281234f3e5dfc3a7713a1f76ec29a709e14713581184a172"
+                      },
+                      {
+                        "filename": "agent_n.png",
+                        "sha256": "4e7abf9d259b7bed8eebbfd048b6cebe7a822615310d2564ee258d250cd69d5c"
+                      },
+                      {
+                        "filename": "agent_s.png",
+                        "sha256": "d3d18aed0286110a08f75cc61f5aac7b8484cae8caccb90034d3bed4e76d47cf"
+                      },
+                      {
+                        "filename": "agent_p.png",
+                        "sha256": "120dbc49d2dbc2392514fa064e263c909e0062d220f7e4d77e7529dbcc9e559b"
+                      },
+                      {
+                        "filename": "agent_rgb_t16.png",
+                        "sha256": "6aa5dd177f86428f160853c18451a2fc105ec51f153762a0b714fd64f5ea8ffa"
+                      },
+                      {
+                        "filename": "wrist_rgb_t.png",
+                        "sha256": "4ea3d41293aae57e82a0c328296fd9a5faec7d7e6526b849b12a795c6599e5c4"
+                      },
+                      {
+                        "filename": "wrist_d.png",
+                        "sha256": "670d7f6977e18308901050953bc54bd864fb33fb6a4e9341651630a0d9ea34ab"
+                      },
+                      {
+                        "filename": "wrist_n.png",
+                        "sha256": "06b7cfcb9d14d8a2b8213045d5ec756c69f6da10514924dffccee76f3df0bf3c"
+                      },
+                      {
+                        "filename": "wrist_s.png",
+                        "sha256": "926a625c2e1c2e165069804b0214c78d0f8b26b5e628c10466f98d803550ada6"
+                      },
+                      {
+                        "filename": "wrist_p.png",
+                        "sha256": "d7fce066dbd606b307319314b62434abc9f3b9f629eae614f3df7dcd54ac3879"
+                      },
+                      {
+                        "filename": "wrist_rgb_t16.png",
+                        "sha256": "3cf237f9bdacfe6c2fdfec10acb8f94e47dcc2051612b6660f5bc8de3cd7c09f"
+                      },
+                      {
+                        "filename": "agent_g.png",
+                        "sha256": "43666d9d09eaacbde9e85c1531762741186112554ec6809ac71393c265d50bd9"
+                      },
+                      {
+                        "filename": "wrist_g.png",
+                        "sha256": "2503ee3cd3ebd8af1f1e8afac4f751156c63b47022e82775abca9ea5c9449142"
+                      },
+                      {
+                        "filename": "agent_fd.png",
+                        "sha256": "45e86ec8af30a1b9bf50b29734fd62fece8d84fa7f9933ee40170a799f5a59e1"
+                      },
+                      {
+                        "filename": "wrist_fd.png",
+                        "sha256": "c3118f00ee2afca31852747043fa6046d8eaa89ef70dd9ea3b6d9915ae3d1d4e"
+                      }
+                    ]
+                  }
+                </script>
+                <noscript
+                  ><style>
+                    .gpv-gallery .gpv-target,
+                    .gpv-gallery .gpv-label-target {
+                      opacity: 1;
+                    }
+                    .gpv-gallery .gpv-label-input,
+                    .gpv-gallery .gpv-controls {
+                      display: none;
+                    }
+                  </style></noscript
+                >
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="method-insight">
+          <p
+            ><strong>A common architecture for visual supervision.</strong> The same policy
+            architecture and native visual objective let us compare current-scene perception, future
+            prediction, and their combinations. Current-scene supervision supports effective control
+            in our experiments, without requiring future visual prediction.</p
+          >
+        </div>
+      </section>
+
+      <section id="results" class="results-section" aria-labelledby="results-title">
+        <div class="wrap section">
+          <div class="section-top"><span class="section-number">RESULTS</span></div>
+          <div class="section-intro results-intro"
+            ><h2 id="results-title">Control performance<br />and efficiency.</h2
+            ><p
+              >Evaluated across tabletop manipulation, visual perturbations, and bimanual tasks,
+              with inference measured on an NVIDIA H100.</p
+            ></div
+          >
+          <div class="results-highlights" aria-label="Key results">
+            <a href="#benchmark-results" data-benchmark-link="libero"
+              ><span>LIBERO</span><strong>99.10<small>%</small></strong
+              ><p>Checkpoint-selection score</p></a
+            >
+            <a href="#benchmark-results" data-benchmark-link="plus"
+              ><span>LIBERO-Plus</span><strong>83.79<small>%</small></strong
+              ><p>Clean-Instruction · no fine-tuning</p></a
+            >
+            <a href="#benchmark-results" data-benchmark-link="robotwin"
+              ><span>RoboTwin 2.0</span><strong>91.45<small>%</small></strong
+              ><p>Clean + Randomized average</p></a
+            >
+            <a href="#efficiency" data-latency-link="compiled"
+              ><span>Inference on H100</span><strong>20.94<small>ms</small></strong
+              ><p>Compiled · per action chunk</p></a
+            >
+          </div>
+          <script id="benchmark-data" type="application/json">
+            {
+              "title": "GenPA benchmark comparisons",
+              "unit": "success rate (%)",
+              "source": "Bundled GenPA November 11 revision, Tables 1–3; existing website validation data",
+              "paper_sha256": "1659cc8615fc23fd6b67354802fe0e2afd50474d39ea4249c9c92d1276254923",
+              "benchmarks": [
+                {
+                  "id": "libero",
+                  "label": "LIBERO",
+                  "source_table": "libero_main.tex",
+                  "paper_page": 6,
+                  "context": "40 tabletop manipulation tasks",
+                  "finding": "GenPA has the highest average among the listed policies without additional robot-data pretraining.",
+                  "note": "GenPA: checkpoint-selection evaluation. Baselines: published reports; native settings differ.",
+                  "total_key": "average",
+                  "columns": [
+                    { "key": "average", "label": "Average" },
+                    { "key": "spatial", "label": "Spatial" },
+                    { "key": "object", "label": "Object" },
+                    { "key": "goal", "label": "Goal" },
+                    { "key": "long", "label": "Long" }
+                  ],
+                  "rows": [
+                    {
+                      "label": "ABot-M0.5",
+                      "robot_pretraining": true,
+                      "values": {
+                        "spatial": 100.0,
+                        "object": 99.8,
+                        "goal": 99.4,
+                        "long": 98.4,
+                        "average": 99.4
+                      }
+                    },
+                    {
+                      "label": "GenPA",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 99.4,
+                        "object": 99.8,
+                        "goal": 98.8,
+                        "long": 98.4,
+                        "average": 99.1
+                      }
+                    },
+                    {
+                      "label": "Qwen-RobotManip",
+                      "robot_pretraining": true,
+                      "values": {
+                        "spatial": null,
+                        "object": null,
+                        "goal": null,
+                        "long": null,
+                        "average": 99.1
+                      }
+                    },
+                    {
+                      "label": "SimVLA",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 99.6,
+                        "object": 99.8,
+                        "goal": 98.6,
+                        "long": 96.4,
+                        "average": 98.6
+                      }
+                    },
+                    {
+                      "label": "LaWAM",
+                      "robot_pretraining": true,
+                      "values": {
+                        "spatial": 99.4,
+                        "object": 99.6,
+                        "goal": 98.4,
+                        "long": 97.0,
+                        "average": 98.6
+                      }
+                    },
+                    {
+                      "label": "VLA-Adapter-Pro",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 99.6,
+                        "object": 99.6,
+                        "goal": 98.2,
+                        "long": 96.4,
+                        "average": 98.5
+                      }
+                    },
+                    {
+                      "label": "Cosmos Policy",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 98.1,
+                        "object": 100.0,
+                        "goal": 98.2,
+                        "long": 97.6,
+                        "average": 98.5
+                      }
+                    },
+                    {
+                      "label": "ImageWAM-4B",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 97.2,
+                        "object": 99.2,
+                        "goal": 98.8,
+                        "long": 98.4,
+                        "average": 98.4
+                      }
+                    },
+                    {
+                      "label": "Fast-WAM",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 98.2,
+                        "object": 100.0,
+                        "goal": 97.0,
+                        "long": 95.2,
+                        "average": 97.6
+                      }
+                    },
+                    {
+                      "label": "VLANeXt",
+                      "robot_pretraining": false,
+                      "values": {
+                        "spatial": 99.0,
+                        "object": 99.2,
+                        "goal": 96.6,
+                        "long": 94.8,
+                        "average": 97.4
+                      }
+                    },
+                    {
+                      "label": "π₀.₅",
+                      "robot_pretraining": true,
+                      "values": {
+                        "spatial": 98.8,
+                        "object": 98.2,
+                        "goal": 98.0,
+                        "long": 92.4,
+                        "average": 96.85
+                      }
+                    },
+                    {
+                      "label": "OpenVLA-OFT",
+                      "robot_pretraining": true,
+                      "values": {
+                        "spatial": 97.7,
+                        "object": 98.0,
+                        "goal": 96.1,
+                        "long": 95.3,
+                        "average": 96.8
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "plus",
+                  "label": "LIBERO-Plus",
+                  "source_table": "robustness_main.tex",
+                  "paper_page": 6,
+                  "context": "10,030 instances · seven perturbation categories",
+                  "finding": "83.79% success using the LIBERO checkpoint, without additional fine-tuning.",
+                  "note": "All policies re-evaluated under Clean-Instruction. Overall success pools all 10,030 instances.",
+                  "total_key": "overall",
+                  "columns": [
+                    { "key": "overall", "label": "Overall" },
+                    { "key": "camera", "label": "Camera" },
+                    { "key": "robot_init", "label": "Robot init." },
+                    { "key": "language", "label": "Language" },
+                    { "key": "lighting", "label": "Lighting" },
+                    { "key": "background", "label": "Background" },
+                    { "key": "noise", "label": "Noise" },
+                    { "key": "layout", "label": "Layout" }
+                  ],
+                  "rows": [
+                    {
+                      "label": "π₀.₅",
+                      "robot_pretraining": true,
+                      "values": {
+                        "camera": 72.23,
+                        "robot_init": 79.61,
+                        "language": 86.21,
+                        "lighting": 96.67,
+                        "background": 96.47,
+                        "noise": 89.76,
+                        "layout": 86.75,
+                        "overall": 85.9
+                      }
+                    },
+                    {
+                      "label": "Cosmos Policy",
+                      "robot_pretraining": false,
+                      "values": {
+                        "camera": 80.24,
+                        "robot_init": 64.97,
+                        "language": 88.29,
+                        "lighting": 99.12,
+                        "background": 88.85,
+                        "noise": 95.07,
+                        "layout": 87.15,
+                        "overall": 85.6
+                      }
+                    },
+                    {
+                      "label": "GenPA",
+                      "robot_pretraining": false,
+                      "values": {
+                        "camera": 81.8,
+                        "robot_init": 67.94,
+                        "language": 84.97,
+                        "lighting": 97.99,
+                        "background": 82.43,
+                        "noise": 92.88,
+                        "layout": 81.57,
+                        "overall": 83.79
+                      }
+                    },
+                    {
+                      "label": "VLANeXt",
+                      "robot_pretraining": false,
+                      "values": {
+                        "camera": 89.49,
+                        "robot_init": 62.77,
+                        "language": 79.18,
+                        "lighting": 95.1,
+                        "background": 89.22,
+                        "noise": 95.57,
+                        "layout": 77.9,
+                        "overall": 83.6
+                      }
+                    },
+                    {
+                      "label": "ImageWAM",
+                      "robot_pretraining": false,
+                      "values": {
+                        "camera": 79.36,
+                        "robot_init": 50.19,
+                        "language": 91.28,
+                        "lighting": 97.55,
+                        "background": 88.48,
+                        "noise": 95.19,
+                        "layout": 78.56,
+                        "overall": 82.13
+                      }
+                    },
+                    {
+                      "label": "OpenVLA-OFT",
+                      "robot_pretraining": true,
+                      "values": {
+                        "camera": 64.73,
+                        "robot_init": 28.32,
+                        "language": 87.12,
+                        "lighting": 95.36,
+                        "background": 89.59,
+                        "noise": 76.83,
+                        "layout": 72.2,
+                        "overall": 71.75
+                      }
+                    },
+                    {
+                      "label": "Fast-WAM",
+                      "robot_pretraining": false,
+                      "values": {
+                        "camera": 46.4,
+                        "robot_init": 72.39,
+                        "language": 67.86,
+                        "lighting": 97.11,
+                        "background": 66.91,
+                        "noise": 69.52,
+                        "layout": 78.3,
+                        "overall": 70.22
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "robotwin",
+                  "label": "RoboTwin 2.0",
+                  "source_table": "robotwin_main.tex",
+                  "paper_page": 7,
+                  "context": "50 bimanual tasks · 10,000 evaluation trials",
+                  "finding": "91.45% average success across Clean and Randomized conditions.",
+                  "note": "GenPA uses a wider action adapter for bimanual control. Baseline scores are from published reports.",
+                  "total_key": "average",
+                  "columns": [
+                    { "key": "average", "label": "Average" },
+                    { "key": "clean", "label": "Clean" },
+                    { "key": "randomized", "label": "Randomized" }
+                  ],
+                  "rows": [
+                    {
+                      "label": "ImageWAM",
+                      "robot_pretraining": false,
+                      "values": { "clean": 93.2, "randomized": 93.56, "average": 93.38 }
+                    },
+                    {
+                      "label": "Qwen-RobotManip",
+                      "robot_pretraining": true,
+                      "values": { "clean": 93.4, "randomized": 92.5, "average": 93.0 }
+                    },
+                    {
+                      "label": "Fast-WAM",
+                      "robot_pretraining": false,
+                      "values": { "clean": 91.88, "randomized": 91.78, "average": 91.83 }
+                    },
+                    {
+                      "label": "GenPA",
+                      "robot_pretraining": false,
+                      "values": { "clean": 92.08, "randomized": 90.82, "average": 91.45 }
+                    },
+                    {
+                      "label": "Motus",
+                      "robot_pretraining": true,
+                      "values": { "clean": 88.66, "randomized": 87.02, "average": 87.84 }
+                    },
+                    {
+                      "label": "π₀.₅",
+                      "robot_pretraining": true,
+                      "values": { "clean": 82.74, "randomized": 76.76, "average": 79.75 }
+                    }
+                  ]
+                }
+              ],
+              "validation": {
+                "training_runs": {
+                  "seeds": [42, 142, 242],
+                  "unit": "success rate (%)",
+                  "standard_deviation": "sample SD across three training runs",
+                  "rows": [
+                    {
+                      "label": "Action only",
+                      "libero": [98.8, 0.22],
+                      "plus_clean": [79.49, 0.85],
+                      "plus_official": [74.63, 4.03]
+                    },
+                    {
+                      "label": "GenPA · current depth",
+                      "libero": [98.87, 0.25],
+                      "plus_clean": [82.33, 1.27],
+                      "plus_official": [78.67, 3.97]
+                    },
+                    {
+                      "label": "Future RGB supervision",
+                      "libero": [98.68, 0.1],
+                      "plus_clean": [81.8, 2.05],
+                      "plus_official": [77.74, 6.57]
+                    }
+                  ]
+                },
+                "independent_libero": {
+                  "mean": 98.33,
+                  "sd": 0.29,
+                  "evaluation_seeds": 3,
+                  "episodes": 6000,
+                  "policy": "Fixed training-seed-42 current-depth checkpoint; no reselection"
+                },
+                "selected_policy": {
+                  "training_seed": 42,
+                  "step": 32000,
+                  "libero": 99.1,
+                  "plus_clean": 83.79,
+                  "plus_official": 83.01,
+                  "successes": [1982, 8404, 8326],
+                  "counts": [2000, 10030, 10030]
+                }
+              }
+            }
+          </script>
+          <section
+            id="benchmark-results"
+            class="results-benchmarks"
+            aria-labelledby="benchmark-title"
+          >
+            <div class="results-part-heading"
+              ><span aria-hidden="true">01</span
+              ><h3 id="benchmark-title">Benchmark performance</h3></div
+            >
+            <div class="benchmark-tabs" role="tablist" aria-label="Benchmark"
+              ><button
+                type="button"
+                role="tab"
+                id="benchmark-tab-libero"
+                data-benchmark="libero"
+                aria-controls="benchmark-libero"
+                aria-selected="true"
+                tabindex="0"
+                >LIBERO</button
+              ><button
+                type="button"
+                role="tab"
+                id="benchmark-tab-plus"
+                data-benchmark="plus"
+                aria-controls="benchmark-plus"
+                aria-selected="false"
+                tabindex="-1"
+                >LIBERO-Plus</button
+              ><button
+                type="button"
+                role="tab"
+                id="benchmark-tab-robotwin"
+                data-benchmark="robotwin"
+                aria-controls="benchmark-robotwin"
+                aria-selected="false"
+                tabindex="-1"
+                >RoboTwin 2.0</button
+              ></div
+            >
+            <div class="benchmark-panels"
+              ><div
+                id="benchmark-libero"
+                class="benchmark-panel"
+                role="tabpanel"
+                aria-labelledby="benchmark-tab-libero"
+                tabindex="0"
+              >
+                <p class="benchmark-finding"
+                  >GenPA reports checkpoint-selection results from 2,000 episodes across 40 tasks.
+                  Baseline scores are from published reports.</p
+                >
+                <div
+                  class="benchmark-table-scroll"
+                  role="region"
+                  aria-label="LIBERO comparison; scroll for all columns"
+                  tabindex="0"
+                  ><table
+                    ><caption class="sr-only">Success rate (%)</caption
+                    ><thead
+                      ><tr
+                        ><th scope="col">Method</th
+                        ><th scope="col" class="benchmark-total">Average</th
+                        ><th scope="col">Spatial</th><th scope="col">Object</th
+                        ><th scope="col">Goal</th><th scope="col">Long</th></tr
+                      ></thead
+                    ><tbody
+                      ><tr
+                        ><th scope="row"
+                          >ABot-M0.5<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">99.40</td><td>100.00</td><td>99.80</td
+                        ><td>99.40</td><td>98.40</td></tr
+                      ><tr class="benchmark-genpa"
+                        ><th scope="row">GenPA</th><td class="benchmark-total">99.10</td
+                        ><td>99.40</td><td>99.80</td><td>98.80</td><td>98.40</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >Qwen-RobotManip<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">99.10</td><td>—</td><td>—</td><td>—</td
+                        ><td>—</td></tr
+                      ><tr
+                        ><th scope="row">SimVLA</th><td class="benchmark-total">98.60</td
+                        ><td>99.60</td><td>99.80</td><td>98.60</td><td>96.40</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >LaWAM<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">98.60</td><td>99.40</td><td>99.60</td
+                        ><td>98.40</td><td>97.00</td></tr
+                      ><tr
+                        ><th scope="row">VLA-Adapter-Pro</th><td class="benchmark-total">98.50</td
+                        ><td>99.60</td><td>99.60</td><td>98.20</td><td>96.40</td></tr
+                      ><tr
+                        ><th scope="row">Cosmos Policy</th><td class="benchmark-total">98.50</td
+                        ><td>98.10</td><td>100.00</td><td>98.20</td><td>97.60</td></tr
+                      ><tr
+                        ><th scope="row">ImageWAM-4B</th><td class="benchmark-total">98.40</td
+                        ><td>97.20</td><td>99.20</td><td>98.80</td><td>98.40</td></tr
+                      ><tr
+                        ><th scope="row">Fast-WAM</th><td class="benchmark-total">97.60</td
+                        ><td>98.20</td><td>100.00</td><td>97.00</td><td>95.20</td></tr
+                      ><tr
+                        ><th scope="row">VLANeXt</th><td class="benchmark-total">97.40</td
+                        ><td>99.00</td><td>99.20</td><td>96.60</td><td>94.80</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >π₀.₅<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">96.85</td><td>98.80</td><td>98.20</td
+                        ><td>98.00</td><td>92.40</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >OpenVLA-OFT<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">96.80</td><td>97.70</td><td>98.00</td
+                        ><td>96.10</td><td>95.30</td></tr
+                      ></tbody
+                    ></table
+                  ></div
+                > </div
+              ><div
+                id="benchmark-plus"
+                class="benchmark-panel"
+                role="tabpanel"
+                aria-labelledby="benchmark-tab-plus"
+                tabindex="0"
+                hidden
+              >
+                <p class="benchmark-finding"
+                  >All policies are re-evaluated on 10,030 instances under
+                  <span class="result-help"
+                    ><button
+                      type="button"
+                      class="result-term"
+                      aria-expanded="false"
+                      aria-controls="clean-instruction-tip"
+                      >Clean-Instruction</button
+                    ><span class="result-tooltip" id="clean-instruction-tip" role="tooltip" hidden
+                      ><strong>What is Clean-Instruction?</strong
+                      ><span
+                        >Removes perturbation identifiers appended to non-language instructions.
+                        Intended language perturbations are preserved.</span
+                      ></span
+                    ></span
+                  >. GenPA uses its LIBERO checkpoint without additional fine-tuning.</p
+                >
+                <div
+                  class="benchmark-table-scroll"
+                  role="region"
+                  aria-label="LIBERO-Plus comparison; scroll for all columns"
+                  tabindex="0"
+                  ><table
+                    ><caption class="sr-only">Success rate (%)</caption
+                    ><thead
+                      ><tr
+                        ><th scope="col">Method</th
+                        ><th scope="col" class="benchmark-total">Overall</th
+                        ><th scope="col">Camera</th><th scope="col">Robot init.</th
+                        ><th scope="col">Language</th><th scope="col">Lighting</th
+                        ><th scope="col">Background</th><th scope="col">Noise</th
+                        ><th scope="col">Layout</th></tr
+                      ></thead
+                    ><tbody
+                      ><tr
+                        ><th scope="row"
+                          >π₀.₅<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">85.90</td><td>72.23</td><td>79.61</td
+                        ><td>86.21</td><td>96.67</td><td>96.47</td><td>89.76</td><td>86.75</td></tr
+                      ><tr
+                        ><th scope="row">Cosmos Policy</th><td class="benchmark-total">85.60</td
+                        ><td>80.24</td><td>64.97</td><td>88.29</td><td>99.12</td><td>88.85</td
+                        ><td>95.07</td><td>87.15</td></tr
+                      ><tr class="benchmark-genpa"
+                        ><th scope="row">GenPA</th><td class="benchmark-total">83.79</td
+                        ><td>81.80</td><td>67.94</td><td>84.97</td><td>97.99</td><td>82.43</td
+                        ><td>92.88</td><td>81.57</td></tr
+                      ><tr
+                        ><th scope="row">VLANeXt</th><td class="benchmark-total">83.60</td
+                        ><td>89.49</td><td>62.77</td><td>79.18</td><td>95.10</td><td>89.22</td
+                        ><td>95.57</td><td>77.90</td></tr
+                      ><tr
+                        ><th scope="row">ImageWAM</th><td class="benchmark-total">82.13</td
+                        ><td>79.36</td><td>50.19</td><td>91.28</td><td>97.55</td><td>88.48</td
+                        ><td>95.19</td><td>78.56</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >OpenVLA-OFT<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">71.75</td><td>64.73</td><td>28.32</td
+                        ><td>87.12</td><td>95.36</td><td>89.59</td><td>76.83</td><td>72.20</td></tr
+                      ><tr
+                        ><th scope="row">Fast-WAM</th><td class="benchmark-total">70.22</td
+                        ><td>46.40</td><td>72.39</td><td>67.86</td><td>97.11</td><td>66.91</td
+                        ><td>69.52</td><td>78.30</td></tr
+                      ></tbody
+                    ></table
+                  ></div
+                > </div
+              ><div
+                id="benchmark-robotwin"
+                class="benchmark-panel"
+                role="tabpanel"
+                aria-labelledby="benchmark-tab-robotwin"
+                tabindex="0"
+                hidden
+              >
+                <p class="benchmark-finding"
+                  >GenPA is evaluated on 50 bimanual tasks, with 5,000 trials each in Clean and
+                  Randomized settings. Baseline scores are from published reports.</p
+                >
+                <div
+                  class="benchmark-table-scroll"
+                  role="region"
+                  aria-label="RoboTwin 2.0 comparison; scroll for all columns"
+                  tabindex="0"
+                  ><table
+                    ><caption class="sr-only">Success rate (%)</caption
+                    ><thead
+                      ><tr
+                        ><th scope="col">Method</th
+                        ><th scope="col" class="benchmark-total">Average</th
+                        ><th scope="col">Clean</th><th scope="col">Randomized</th></tr
+                      ></thead
+                    ><tbody
+                      ><tr
+                        ><th scope="row">ImageWAM</th><td class="benchmark-total">93.38</td
+                        ><td>93.20</td><td>93.56</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >Qwen-RobotManip<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">93.00</td><td>93.40</td><td>92.50</td></tr
+                      ><tr
+                        ><th scope="row">Fast-WAM</th><td class="benchmark-total">91.83</td
+                        ><td>91.88</td><td>91.78</td></tr
+                      ><tr class="benchmark-genpa"
+                        ><th scope="row">GenPA</th><td class="benchmark-total">91.45</td
+                        ><td>92.08</td><td>90.82</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >Motus<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">87.84</td><td>88.66</td><td>87.02</td></tr
+                      ><tr
+                        ><th scope="row"
+                          >π₀.₅<sup title="Additional robot-data pretraining">*</sup></th
+                        ><td class="benchmark-total">79.75</td><td>82.74</td><td>76.76</td></tr
+                      ></tbody
+                    ></table
+                  ></div
+                >
+              </div></div
+            >
+            <div class="benchmark-footer">
+              <p class="benchmark-note">Success rate (%) · * Additional robot-data pretraining.</p>
+            </div>
+          </section>
+          <section
+            id="efficiency"
+            class="results-part efficiency-section gul"
+            aria-labelledby="gul-title"
+          >
+            <div class="gul-intro"
+              ><div class="results-part-heading"
+                ><span aria-hidden="true">02</span
+                ><h3 id="gul-title">Fast inference, explained.</h3></div
+              ><p
+                >Lightweight visual encoding and reusable language features reduce per-observation
+                work. GenPA combines this with a single backbone pass and direct action
+                regression.</p
+              ></div
+            >
+            <div class="gul-chart">
+              <div class="gul-chart-head"
+                ><div
+                  ><h4>Where the time goes</h4
+                  ><p>NVIDIA H100 · batch 1 · milliseconds per action chunk</p></div
+                ><div class="gul-mode" role="group" aria-label="Inference implementation"
+                  ><button type="button" data-gul-mode="uncompiled" aria-pressed="true"
+                    >Uncompiled</button
+                  ><button type="button" data-gul-mode="compiled" aria-pressed="false"
+                    >Compiled</button
+                  ></div
+                ></div
+              >
+              <div class="gul-chart-meta"
+                ><p
+                  ><strong>GenPA is fastest in this comparison.</strong>
+                  <span>Sorted from fast to slow.</span></p
+                ><span class="gul-lower">Lower is faster ↓</span></div
+              >
+              <div class="gul-legend" aria-label="Latency component legend"
+                ><span><i class="gul-vision"></i>Vision</span
+                ><span><i class="gul-backbone"></i>Backbone</span
+                ><span><i class="gul-action"></i>Action</span
+                ><span><i class="gul-other"></i>Other</span
+                ><span data-gul-joint-legend hidden
+                  ><i class="gul-vision_backbone"></i>Vision + Backbone</span
+                ><span><i class="gul-marker-key"></i>Measured total</span></div
+              >
+              <div class="gul-axis" aria-hidden="true"
+                ><span>Policy</span
+                ><div
+                  ><span style="left: 0%">0</span><span style="left: 29.41176471%">100</span
+                  ><span style="left: 58.82352941%">200</span
+                  ><span class="gul-tick-300" style="left: 88.23529412%">300</span></div
+                ><span>Total</span></div
+              >
+              <div class="gul-rows"
+                ><div
+                  class="gul-row"
+                  data-gul-row="genpa"
+                  data-selected="true"
+                  role="group"
+                  aria-label="GenPA latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="genpa"
+                    aria-pressed="true"
+                    aria-controls="gul-inspector"
+                    >GenPA<small>16-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 1.38529412%"
+                        data-gul-component="vision"
+                        data-gul-series="genpa"
+                        aria-label="GenPA, uncompiled, Vision, 4.71 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 4.71764706%"
+                        data-gul-component="backbone"
+                        data-gul-series="genpa"
+                        aria-label="GenPA, uncompiled, Backbone, 16.04 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 0.18235294%"
+                        data-gul-component="action"
+                        data-gul-series="genpa"
+                        aria-label="GenPA, uncompiled, Action, 0.62 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 1.94705882%"
+                        data-gul-component="other"
+                        data-gul-series="genpa"
+                        aria-label="GenPA, uncompiled, Other, 6.62 milliseconds"
+                      ></button></div
+                    ><span
+                      class="gul-total-marker"
+                      style="left: 8.19411765%"
+                      aria-hidden="true"
+                    ></span
+                  ></div>
+                  <span class="gul-total-value">27.86</span> </div
+                ><div
+                  class="gul-row"
+                  data-gul-row="genpa-flow"
+                  data-selected="false"
+                  role="group"
+                  aria-label="GenPA (flow) latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="genpa-flow"
+                    aria-pressed="false"
+                    aria-controls="gul-inspector"
+                    >GenPA (flow)<small>16-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 1.40183078%"
+                        data-gul-component="vision"
+                        data-gul-series="genpa-flow"
+                        aria-label="GenPA (flow), uncompiled, Vision, 4.77 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 4.861405%"
+                        data-gul-component="backbone"
+                        data-gul-series="genpa-flow"
+                        aria-label="GenPA (flow), uncompiled, Backbone, 16.53 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 7.61690554%"
+                        data-gul-component="action"
+                        data-gul-series="genpa-flow"
+                        aria-label="GenPA (flow), uncompiled, Action, 25.90 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 2.07744987%"
+                        data-gul-component="other"
+                        data-gul-series="genpa-flow"
+                        aria-label="GenPA (flow), uncompiled, Other, 7.06 milliseconds"
+                      ></button></div
+                    ><span class="gul-total-marker" style="left: 15.85%" aria-hidden="true"></span
+                  ></div>
+                  <span class="gul-total-value">53.89</span> </div
+                ><div
+                  class="gul-row"
+                  data-gul-row="oft"
+                  data-selected="false"
+                  role="group"
+                  aria-label="OpenVLA-OFT latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="oft"
+                    aria-pressed="false"
+                    aria-controls="gul-inspector"
+                    >OpenVLA-OFT<small>8-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 8.10882353%"
+                        data-gul-component="vision"
+                        data-gul-series="oft"
+                        aria-label="OpenVLA-OFT, uncompiled, Vision, 27.57 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 7.86764706%"
+                        data-gul-component="backbone"
+                        data-gul-series="oft"
+                        aria-label="OpenVLA-OFT, uncompiled, Backbone, 26.75 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 0.30882353%"
+                        data-gul-component="action"
+                        data-gul-series="oft"
+                        aria-label="OpenVLA-OFT, uncompiled, Action, 1.05 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 4.99117647%"
+                        data-gul-component="other"
+                        data-gul-series="oft"
+                        aria-label="OpenVLA-OFT, uncompiled, Other, 16.97 milliseconds"
+                      ></button></div
+                    ><span
+                      class="gul-total-marker"
+                      style="left: 21.21176471%"
+                      aria-hidden="true"
+                    ></span
+                  ></div>
+                  <span class="gul-total-value">72.12</span> </div
+                ><div
+                  class="gul-row"
+                  data-gul-row="imagewam"
+                  data-selected="false"
+                  role="group"
+                  aria-label="ImageWAM latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="imagewam"
+                    aria-pressed="false"
+                    aria-controls="gul-inspector"
+                    >ImageWAM<small>16-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 1.41764706%"
+                        data-gul-component="vision"
+                        data-gul-series="imagewam"
+                        aria-label="ImageWAM, uncompiled, Vision, 4.82 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 7.14705882%"
+                        data-gul-component="backbone"
+                        data-gul-series="imagewam"
+                        aria-label="ImageWAM, uncompiled, Backbone, 24.30 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 35.73235294%"
+                        data-gul-component="action"
+                        data-gul-series="imagewam"
+                        aria-label="ImageWAM, uncompiled, Action, 121.49 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 3.02941176%"
+                        data-gul-component="other"
+                        data-gul-series="imagewam"
+                        aria-label="ImageWAM, uncompiled, Other, 10.30 milliseconds"
+                      ></button></div
+                    ><span
+                      class="gul-total-marker"
+                      style="left: 46.91470588%"
+                      aria-hidden="true"
+                    ></span
+                  ></div>
+                  <span class="gul-total-value">159.51</span> </div
+                ><div
+                  class="gul-row"
+                  data-gul-row="pi05"
+                  data-selected="false"
+                  role="group"
+                  aria-label="π₀.₅ latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="pi05"
+                    aria-pressed="false"
+                    aria-controls="gul-inspector"
+                    >π₀.₅<small>10-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 7.23823529%"
+                        data-gul-component="vision"
+                        data-gul-series="pi05"
+                        aria-label="π₀.₅, uncompiled, Vision, 24.61 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 3.99411765%"
+                        data-gul-component="backbone"
+                        data-gul-series="pi05"
+                        aria-label="π₀.₅, uncompiled, Backbone, 13.58 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 35.61470588%"
+                        data-gul-component="action"
+                        data-gul-series="pi05"
+                        aria-label="π₀.₅, uncompiled, Action, 121.09 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 2.28235294%"
+                        data-gul-component="other"
+                        data-gul-series="pi05"
+                        aria-label="π₀.₅, uncompiled, Other, 7.76 milliseconds"
+                      ></button></div
+                    ><span
+                      class="gul-total-marker"
+                      style="left: 48.85294118%"
+                      aria-hidden="true"
+                    ></span
+                  ></div>
+                  <span class="gul-total-value">166.10</span> </div
+                ><div
+                  class="gul-row"
+                  data-gul-row="fastwam"
+                  data-selected="false"
+                  role="group"
+                  aria-label="Fast-WAM latency"
+                >
+                  <button
+                    type="button"
+                    class="gul-model"
+                    data-gul-model="fastwam"
+                    aria-pressed="false"
+                    aria-controls="gul-inspector"
+                    >Fast-WAM<small>32-action chunk</small></button
+                  >
+                  <div class="gul-track"
+                    ><div class="gul-stack"
+                      ><button
+                        type="button"
+                        class="gul-segment gul-vision"
+                        style="width: 1.48529412%"
+                        data-gul-component="vision"
+                        data-gul-series="fastwam"
+                        aria-label="Fast-WAM, uncompiled, Vision, 5.05 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-backbone"
+                        style="width: 9.51176471%"
+                        data-gul-component="backbone"
+                        data-gul-series="fastwam"
+                        aria-label="Fast-WAM, uncompiled, Backbone, 32.34 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-action"
+                        style="width: 79.82941176%"
+                        data-gul-component="action"
+                        data-gul-series="fastwam"
+                        aria-label="Fast-WAM, uncompiled, Action, 271.42 milliseconds"
+                      ></button
+                      ><button
+                        type="button"
+                        class="gul-segment gul-other"
+                        style="width: 3.47352941%"
+                        data-gul-component="other"
+                        data-gul-series="fastwam"
+                        aria-label="Fast-WAM, uncompiled, Other, 11.81 milliseconds"
+                      ></button></div
+                    ><span
+                      class="gul-total-marker"
+                      style="left: 94.72647059%"
+                      aria-hidden="true"
+                    ></span
+                  ></div>
+                  <span class="gul-total-value">322.07</span>
+                </div></div
+              >
+              <p class="gul-chart-note"
+                >Hover or tap a segment for its latency; choose a policy for details. Black ticks
+                mark independently timed totals. Components come from a separate profiling pass and
+                are not rescaled.</p
+              >
+              <div class="gul-inspector" id="gul-inspector" aria-live="polite" aria-atomic="true"
+                ><div class="gul-inspector-head"
+                  ><div
+                    ><h4 data-gul-inspector-title
+                      ><span data-gul-inspector-name>GenPA</span
+                      ><span class="result-help" data-gul-flow-help hidden
+                        ><button
+                          type="button"
+                          class="result-term"
+                          aria-expanded="false"
+                          aria-controls="genpa-flow-tip"
+                          >GenPA (flow)</button
+                        ><span class="result-tooltip" id="genpa-flow-tip" role="tooltip" hidden
+                          ><strong>What is GenPA (flow)?</strong
+                          ><span
+                            >This GenPA variant uses a flow-matching action adapter in place of
+                            direct regression. It refines a noisy action chunk over eight steps,
+                            reusing features from one backbone forward.</span
+                          ></span
+                        ></span
+                      ></h4
+                    ><p data-gul-inspector-meta>16-action chunk · text features cached</p></div
+                  ><p class="gul-summary" data-gul-summary>27.86 ± 0.32 ms</p></div
+                ><dl class="gul-values"
+                  ><div
+                    ><dt><i class="gul-vision"></i>Vision</dt><dd>4.71 <small>ms</small></dd></div
+                  ><div
+                    ><dt><i class="gul-backbone"></i>Backbone</dt
+                    ><dd>16.04 <small>ms</small></dd></div
+                  ><div
+                    ><dt><i class="gul-action"></i>Action</dt><dd>0.62 <small>ms</small></dd></div
+                  ><div
+                    ><dt><i class="gul-other"></i>Other</dt><dd>6.62 <small>ms</small></dd></div
+                  ></dl
+                ><p class="gul-boundary" data-gul-boundary
+                  >Action covers the complete regression adapter within a full policy call.</p
+                ></div
+              >
+            </div>
+            <p class="gul-analysis"
+              ><strong>Why image generators can be efficient.</strong> The evaluated VLM policies
+              extract high-level visual features before multimodal reasoning. GenPA compresses
+              observations with a lightweight VAE and performs conditional visual modeling in its
+              backbone. Images change continuously, while instructions usually remain fixed;
+              independently encoded language features can therefore be reused across policy calls.
+              GenPA then reads out actions directly, avoiding iterative decoding.</p
+            >
+            <p class="gul-status" role="status" aria-live="polite" data-gul-status></p>
+            <div class="gul-tooltip" id="gul-tooltip" role="tooltip" hidden></div>
+            <script type="application/json" id="gul-total-data">
+              {
+                "title": "H100 native-system action-chunk latency",
+                "units": "milliseconds",
+                "display_precision": 2,
+                "sources": [
+                  "GenPA manuscript tables/architecture_latency_totals.tex",
+                  "GenPA manuscript tables/architecture_latency_measures.tex",
+                  "GenPA manuscript evidence/latency_figure3_E10_sources.json",
+                  "GenPA manuscript sections/evaluation.tex, Latency across policy architectures"
+                ],
+                "measurement": {
+                  "calls_per_configuration": 600,
+                  "standard_deviation": "sample standard deviation across three process means",
+                  "p95": "pooled 95th percentile across calls",
+                  "cached_text": "GenPA, Fast-WAM and ImageWAM exclude independently cached text encoding",
+                  "comparability": "Native action horizons, preprocessing, and language caching differ. Compiled timing does not establish equal closed-loop performance. This is policy inference, not end-to-end robot latency."
+                },
+                "series": [
+                  {
+                    "id": "genpa",
+                    "label": "GenPA",
+                    "detail": "Direct regression",
+                    "uncompiled": { "mean_ms": 27.86, "sd_ms": 0.32, "p95_ms": 29.49 },
+                    "compiled": { "mean_ms": 20.94, "sd_ms": 0.47, "p95_ms": 21.58 }
+                  },
+                  {
+                    "id": "genpa-flow",
+                    "label": "GenPA (flow)",
+                    "detail": "Flow action head",
+                    "uncompiled": { "mean_ms": 53.89, "sd_ms": 0.62, "p95_ms": 65.99 },
+                    "compiled": { "mean_ms": 29.22, "sd_ms": 0.15, "p95_ms": 29.62 }
+                  },
+                  {
+                    "id": "pi05",
+                    "label": "π₀.₅",
+                    "detail": "",
+                    "uncompiled": { "mean_ms": 166.1, "sd_ms": 0.96, "p95_ms": 168.23 },
+                    "compiled": { "mean_ms": 36.59, "sd_ms": 0.06, "p95_ms": 36.8 }
+                  },
+                  {
+                    "id": "oft",
+                    "label": "OpenVLA-OFT",
+                    "detail": "",
+                    "uncompiled": { "mean_ms": 72.12, "sd_ms": 1.29, "p95_ms": 74.6 },
+                    "compiled": { "mean_ms": 53.36, "sd_ms": 0.29, "p95_ms": 54.73 }
+                  },
+                  {
+                    "id": "imagewam",
+                    "label": "ImageWAM",
+                    "detail": "",
+                    "uncompiled": { "mean_ms": 159.51, "sd_ms": 1.69, "p95_ms": 161.62 },
+                    "compiled": { "mean_ms": 57.39, "sd_ms": 1.27, "p95_ms": 59.89 }
+                  },
+                  {
+                    "id": "fastwam",
+                    "label": "Fast-WAM",
+                    "detail": "",
+                    "uncompiled": { "mean_ms": 322.07, "sd_ms": 9.53, "p95_ms": 335.19 },
+                    "compiled": { "mean_ms": 71.34, "sd_ms": 0.23, "p95_ms": 72.28 }
+                  }
+                ]
+              }
+            </script>
+            <script type="application/json" id="gul-profile-data">
+              {
+                "title": "H100 component profiling and independently timed totals",
+                "unit": "ms per native action chunk",
+                "sources": [
+                  "GenPA manuscript tables/latency_h100_breakdown.tex",
+                  "GenPA manuscript sections/appendix_efficiency.tex, Measurement Protocol and Component Profiling and Compilation",
+                  "GenPA manuscript tables/architecture_latency_configs.tex",
+                  "GenPA manuscript evidence/latency_figure3_E10_sources.json",
+                  "GenPA E9 architecture latency audit, architecture_summary.json (2026-09-17)"
+                ],
+                "component_order": ["vision", "backbone", "vision_backbone", "action", "other"],
+                "component_labels": {
+                  "vision": "Vision",
+                  "backbone": "Backbone",
+                  "vision_backbone": "Vision + Backbone (joint)",
+                  "action": "Action",
+                  "other": "Other"
+                },
+                "protocol": {
+                  "hardware": "NVIDIA H100 80GB HBM3, 700 W power limit",
+                  "batch": 1,
+                  "warmup_calls_per_process": 50,
+                  "measured_calls_per_process": 200,
+                  "processes": 3,
+                  "total_timing": "Uninstrumented synchronized complete calls. Mean and sample SD across three process means.",
+                  "components": "Nonoverlapping CUDA-event intervals inside full policy calls, measured in separate profiling passes. Components are not rescaled to independent totals.",
+                  "other": "Profiled complete-call latency minus timed intervals; includes remaining preprocessing, transfers and postprocessing, not pure CPU time.",
+                  "compiled_pi05": "Vision and Backbone share a captured graph and are profiled jointly. Compiled Action includes Euler updates.",
+                  "uncompiled_pi05": "Action includes ten expert calls. Euler updates and loop control are in Other.",
+                  "scope": "Input: decoded CPU RGB, raw proprioception, raw instruction or cached text. Output: CPU action chunk after postprocessing. Excludes file decoding, model loading, compilation, environment/robot communication.",
+                  "comparability": "Native action horizons, preprocessing, caching and compilation scopes differ. These comparisons characterize measured implementations, not an isolated module causal effect or equal closed-loop performance.",
+                  "genpa_flow": "Action includes flow context/cache preparation and all eight decode and Euler steps. H16, K8, batch 1, BF16; text-only across-call cache."
+                },
+                "series": [
+                  {
+                    "id": "genpa",
+                    "label": "GenPA",
+                    "horizon": 16,
+                    "across_call_cache": "Text only",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 4.71,
+                        "backbone": 16.04,
+                        "action": 0.62,
+                        "other": 6.62
+                      },
+                      "independent_total_ms": 27.86,
+                      "independent_total_sd_ms": 0.32
+                    },
+                    "compiled": {
+                      "components_ms": {
+                        "vision": 2.29,
+                        "backbone": 10.46,
+                        "action": 0.46,
+                        "other": 7.83
+                      },
+                      "independent_total_ms": 20.94,
+                      "independent_total_sd_ms": 0.47
+                    }
+                  },
+                  {
+                    "id": "genpa-flow",
+                    "label": "GenPA (flow)",
+                    "horizon": 16,
+                    "flow_steps": 8,
+                    "across_call_cache": "Text only",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 4.766224623521169,
+                        "backbone": 16.528777009646095,
+                        "action": 25.897478857040408,
+                        "other": 7.063329543125661
+                      },
+                      "independent_total_ms": 53.893228835,
+                      "independent_total_sd_ms": 0.6190698279754747,
+                      "profiled_total_ms": 54.25581003333334
+                    },
+                    "compiled": {
+                      "components_ms": {
+                        "vision": 2.21859029173851,
+                        "backbone": 10.42810459136963,
+                        "action": 8.815602456728618,
+                        "other": 7.813085898496577
+                      },
+                      "independent_total_ms": 29.217793736666664,
+                      "independent_total_sd_ms": 0.1533734664804801,
+                      "profiled_total_ms": 29.275383238333333
+                    }
+                  },
+                  {
+                    "id": "oft",
+                    "label": "OpenVLA-OFT",
+                    "horizon": 8,
+                    "across_call_cache": "None",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 27.57,
+                        "backbone": 26.75,
+                        "action": 1.05,
+                        "other": 16.97
+                      },
+                      "independent_total_ms": 72.12,
+                      "independent_total_sd_ms": 1.29
+                    },
+                    "compiled": {
+                      "components_ms": {
+                        "vision": 14.91,
+                        "backbone": 21.64,
+                        "action": 0.32,
+                        "other": 16.7
+                      },
+                      "independent_total_ms": 53.36,
+                      "independent_total_sd_ms": 0.29
+                    }
+                  },
+                  {
+                    "id": "pi05",
+                    "label": "π₀.₅",
+                    "horizon": 10,
+                    "across_call_cache": "None",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 24.61,
+                        "backbone": 13.58,
+                        "action": 121.09,
+                        "other": 7.76
+                      },
+                      "independent_total_ms": 166.1,
+                      "independent_total_sd_ms": 0.96
+                    },
+                    "compiled": {
+                      "components_ms": { "vision_backbone": 14.09, "action": 14.2, "other": 8.75 },
+                      "independent_total_ms": 36.59,
+                      "independent_total_sd_ms": 0.06
+                    }
+                  },
+                  {
+                    "id": "fastwam",
+                    "label": "Fast-WAM",
+                    "horizon": 32,
+                    "across_call_cache": "Text only",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 5.05,
+                        "backbone": 32.34,
+                        "action": 271.42,
+                        "other": 11.81
+                      },
+                      "independent_total_ms": 322.07,
+                      "independent_total_sd_ms": 9.53
+                    },
+                    "compiled": {
+                      "components_ms": {
+                        "vision": 4.96,
+                        "backbone": 10.22,
+                        "action": 45.25,
+                        "other": 11.08
+                      },
+                      "independent_total_ms": 71.34,
+                      "independent_total_sd_ms": 0.23
+                    }
+                  },
+                  {
+                    "id": "imagewam",
+                    "label": "ImageWAM",
+                    "horizon": 16,
+                    "across_call_cache": "Text only",
+                    "uncompiled": {
+                      "components_ms": {
+                        "vision": 4.82,
+                        "backbone": 24.3,
+                        "action": 121.49,
+                        "other": 10.3
+                      },
+                      "independent_total_ms": 159.51,
+                      "independent_total_sd_ms": 1.69
+                    },
+                    "compiled": {
+                      "components_ms": {
+                        "vision": 2.37,
+                        "backbone": 15.78,
+                        "action": 28.73,
+                        "other": 10.2
+                      },
+                      "independent_total_ms": 57.39,
+                      "independent_total_sd_ms": 1.27
+                    }
+                  }
+                ]
+              }
+            </script>
+          </section>
+          <section id="supervision" class="results-part" aria-labelledby="supervision-study-title">
+            <div class="supervision-explorer">
+              <div class="supervision-picker"
+                ><div class="results-part-heading"
+                  ><span aria-hidden="true">03</span
+                  ><h3 id="supervision-study-title"
+                    >Which visual target<br />
+                    helps the policy?</h3
+                  ></div
+                ><p
+                  >Compare
+                  <span class="result-help"
+                    ><button
+                      type="button"
+                      class="result-term"
+                      aria-expanded="false"
+                      aria-controls="visual-targets-tip"
+                      >visual targets</button
+                    ><span class="result-tooltip" id="visual-targets-tip" role="tooltip" hidden
+                      ><strong>What are visual targets?</strong
+                      ><span
+                        >Training reuses the image generator’s native image-editing interface, with
+                        depth maps, normals, segmentation maps, or future images as supervised
+                        outputs. This visual loss also trains the action policy’s backbone.</span
+                      ></span
+                    ></span
+                  >
+                  with
+                  <span class="result-help"
+                    ><button
+                      type="button"
+                      class="result-term"
+                      aria-expanded="false"
+                      aria-controls="action-only-tip"
+                      >action-only</button
+                    ><span class="result-tooltip" id="action-only-tip" role="tooltip" hidden
+                      ><strong>What is action-only training?</strong
+                      ><span
+                        >The policy is trained with action supervision alone, without a
+                        visual-supervision objective.</span
+                      ></span
+                    ></span
+                  >
+                  training in a controlled study of supervision.</p
+                ><div id="supervision-options"
+                  ><div class="supervision-option-group"
+                    ><span>Reference</span
+                    ><div role="group" aria-label="Reference targets"
+                      ><button
+                        type="button"
+                        data-supervision-target="None"
+                        aria-pressed="false"
+                        aria-label="No visual supervision"
+                        >Action only</button
+                      ></div
+                    ></div
+                  ><div class="supervision-option-group"
+                    ><span>Current perception</span
+                    ><div role="group" aria-label="Current perception targets"
+                      ><button
+                        type="button"
+                        data-supervision-target="D"
+                        aria-pressed="true"
+                        aria-label="Current depth"
+                        >Depth</button
+                      ><button
+                        type="button"
+                        data-supervision-target="N"
+                        aria-pressed="false"
+                        aria-label="Surface normals"
+                        >Normals</button
+                      ><button
+                        type="button"
+                        data-supervision-target="S"
+                        aria-pressed="false"
+                        aria-label="Semantic-part segmentation"
+                        >Segmentation</button
+                      ><button
+                        type="button"
+                        data-supervision-target="P"
+                        aria-pressed="false"
+                        aria-label="Robot-frame pointmaps"
+                        >Pointmaps</button
+                      ><button
+                        type="button"
+                        data-supervision-target="G"
+                        aria-pressed="false"
+                        aria-label="Task-conditioned grounding"
+                        >Grounding</button
+                      ></div
+                    ></div
+                  ><div class="supervision-option-group"
+                    ><span>Future prediction</span
+                    ><div role="group" aria-label="Future prediction targets"
+                      ><button
+                        type="button"
+                        data-supervision-target="F"
+                        aria-pressed="false"
+                        aria-label="Future RGB"
+                        >Future RGB</button
+                      ><button
+                        type="button"
+                        data-supervision-target="FD"
+                        aria-pressed="false"
+                        aria-label="Future depth"
+                        >Future depth</button
+                      ></div
+                    ></div
+                  ><div class="supervision-option-group"
+                    ><span>Combinations</span
+                    ><div role="group" aria-label="Combinations targets"
+                      ><button
+                        type="button"
+                        data-supervision-target="D+S"
+                        aria-pressed="false"
+                        aria-label="Current depth + semantic-part segmentation"
+                        >Depth + seg.</button
+                      ><button
+                        type="button"
+                        data-supervision-target="D+P"
+                        aria-pressed="false"
+                        aria-label="Current depth + robot-frame pointmaps"
+                        >Depth + pointmaps</button
+                      ><button
+                        type="button"
+                        data-supervision-target="D+F"
+                        aria-pressed="false"
+                        aria-label="Current depth + future RGB"
+                        >Depth + future RGB</button
+                      ><button
+                        type="button"
+                        data-supervision-target="D+N+S+P"
+                        aria-pressed="false"
+                        aria-label="Current depth + normals + segmentation + pointmaps"
+                        >Four current targets</button
+                      ></div
+                    ></div
+                  ></div
+                ></div
+              >
+              <div class="supervision-result" aria-labelledby="supervision-selection">
+                <div class="supervision-selection"
+                  ><div
+                    ><span class="small-label" id="supervision-family">CURRENT PERCEPTION</span
+                    ><h4 id="supervision-selection">Current depth</h4></div
+                  ><span class="supervision-pass-count result-help"
+                    ><button
+                      type="button"
+                      class="result-term"
+                      id="supervision-pass-count"
+                      aria-expanded="false"
+                      aria-controls="perception-pass-tip"
+                      >1 perception pass</button
+                    ><span class="result-tooltip" id="perception-pass-tip" role="tooltip" hidden
+                      ><strong>What is a perception pass?</strong
+                      ><span id="perception-pass-description"
+                        >A perception pass is one additional backbone forward for visual supervision
+                        during training. This target adds one pass per action update.</span
+                      ></span
+                    ></span
+                  ></div
+                >
+                <div class="supervision-scores"
+                  ><div
+                    ><span>LIBERO-Plus · Clean</span
+                    ><strong id="supervision-plus">76.69<small>%</small></strong
+                    ><span id="supervision-gain">+5.82 points vs action only</span></div
+                  ><div
+                    ><span>LIBERO</span
+                    ><strong id="supervision-libero">97.87<small> ± 0.65%</small></strong
+                    ><span>Mean ± SD · 3 evaluation seeds</span></div
+                  ></div
+                >
+                <div class="supervision-chart-heading"
+                  ><h4>Robustness change from action only</h4><span>percentage points</span></div
+                >
+                <div class="supervision-axis" aria-hidden="true"
+                  ><span></span><div><span>−20</span><span>0</span><span>+20</span></div
+                  ><span></span
+                ></div>
+                <div id="supervision-bars"
+                  ><div class="supervision-delta-row" data-supervision-category="camera"
+                    ><span class="supervision-category">Camera</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 19%"></span></span
+                    ><span class="supervision-delta-value">+7.6</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="robot_init"
+                    ><span class="supervision-category">Robot initial state</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 19.25%"></span></span
+                    ><span class="supervision-delta-value">+7.7</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="language"
+                    ><span class="supervision-category">Language</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 20%"></span></span
+                    ><span class="supervision-delta-value">+8.0</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="light"
+                    ><span class="supervision-category">Lighting</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 7.25%"></span></span
+                    ><span class="supervision-delta-value">+2.9</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="background"
+                    ><span class="supervision-category">Background</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 4.5%"></span></span
+                    ><span class="supervision-delta-value">+1.8</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="noise"
+                    ><span class="supervision-category">Sensor noise</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 20.5%"></span></span
+                    ><span class="supervision-delta-value">+8.2</span></div
+                  ><div class="supervision-delta-row" data-supervision-category="layout"
+                    ><span class="supervision-category">Object layout</span
+                    ><span class="supervision-delta-track" aria-hidden="true"
+                      ><span class="supervision-delta-fill" style="width: 6.25%"></span></span
+                    ><span class="supervision-delta-value">+2.5</span></div
+                  ></div
+                >
+                <p class="supervision-chart-note"
+                  >Bars show changes in success rate, not absolute scores. Zero is the action-only
+                  baseline for each perturbation category.</p
+                >
+                <p class="sr-only" id="supervision-state" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+            <p class="study-caption"
+              >Unlike the benchmark training setup, these ablations omit random image augmentation
+              and resizing to avoid unequal effects across visual targets.</p
+            >
+            <div class="study-findings">
+              <article
+                ><h4>Current depth helps across all seven perturbations.</h4
+                ><p
+                  >Current depth raises LIBERO-Plus success from 70.87% to 76.69% in this study,
+                  with gains in every perturbation category.</p
+                ></article
+              >
+              <article
+                ><h4>Future prediction is optional.</h4
+                ><p
+                  >Future RGB also improves control (77.10%). Current-scene supervision offers an
+                  effective route without a future-prediction objective.</p
+                ></article
+              >
+              <article
+                ><h4>More supervision is not always better.</h4
+                ><p
+                  >Depth + segmentation scores below either alone. Depth + future RGB reaches
+                  77.42%, just 0.32 points above future RGB alone.</p
+                ></article
+              >
+            </div>
+
+            <script type="application/json" id="supervision-data">
+              {
+                "schema_version": 1,
+                "title": "Visual supervision within one policy architecture",
+                "source": {
+                  "paper_title": "GenPA: Image Generators as Efficient Robot Policies",
+                  "table": "tables/supervision_ablation.tex",
+                  "table_label": "tab:visual-supervision",
+                  "table_sha256": "f42021c1e75231bdfefaffb6074f15fb1bad797667b6a7008fb5a4955ee0a344",
+                  "protocol_references": [
+                    "sections/evaluation.tex",
+                    "sections/visual_supervision_details.tex",
+                    "sections/appendix_implementation.tex",
+                    "tables/appendix_visual_sampling.tex"
+                  ]
+                },
+                "units": {
+                  "libero_mean": "percent success",
+                  "libero_sd": "percentage points",
+                  "plus_rate": "percent success",
+                  "category_deltas_pp": "percentage-point change from no visual supervision",
+                  "category_baseline_percent": "percent success"
+                },
+                "categories": [
+                  { "id": "camera", "label": "Camera viewpoints", "baseline_percent": 66.42 },
+                  { "id": "robot_init", "label": "Robot initial states", "baseline_percent": 59.1 },
+                  { "id": "language", "label": "Language instructions", "baseline_percent": 79.38 },
+                  { "id": "light", "label": "Lighting conditions", "baseline_percent": 93.08 },
+                  { "id": "background", "label": "Background textures", "baseline_percent": 43.4 },
+                  { "id": "noise", "label": "Sensor noise", "baseline_percent": 73.52 },
+                  { "id": "layout", "label": "Object layouts", "baseline_percent": 78.89 }
+                ],
+                "protocol": {
+                  "comparison": "Visual-target ablation configuration",
+                  "fixed_controls": [
+                    "Policy architecture",
+                    "Training data",
+                    "Maximum action-update budget",
+                    "RGB/target preprocessing"
+                  ],
+                  "maximum_action_updates": 36750,
+                  "input_views": 2,
+                  "view_size_pixels": [256, 256],
+                  "packed_image_size_height_width": [256, 512],
+                  "stochastic_augmentation": false,
+                  "spatial_resizing": false,
+                  "different_from_main_policy": true,
+                  "main_policy_difference": "The headline LIBERO policy uses 224×224 views and training augmentation. These target-ablation scores must not be substituted for main-policy or release-reevaluation scores.",
+                  "compute_equated": false,
+                  "perception_sampling": "None: no perception pass. Single target: one fixed target. Two-target combinations: uniformly sample one target per observation. Four-target combination: uniformly sample two distinct targets and sum their losses.",
+                  "loss_coefficient_per_selected_target": 0.1,
+                  "libero_statistic": "Mean ± standard deviation across 3 evaluation seeds for one fixed checkpoint per configuration; not 3 training seeds.",
+                  "libero_evaluation_seed_count": 3,
+                  "same_fixed_checkpoint_for_both_benchmarks": true,
+                  "plus_statistic": "Absolute LIBERO-Plus success rate from the source table; no training-seed error bar is reported here.",
+                  "category_statistic": "Published one-decimal percentage-point changes from None, not absolute success rates. Category baselines retain the published two-decimal rates.",
+                  "none_delta_note": "The source table displays absolute category rates for None; its zero deltas here are the defined reference, not additional reported measurements.",
+                  "rounding_note": "Category deltas are retained exactly as published; adding rounded deltas to baselines does not recover higher-precision category rates.",
+                  "causal_limit": "The common policy architecture limits architectural confounds, but perception computation and total perception-loss weight differ across rows.",
+                  "plus_instruction_protocol": "Clean instructions: appended perturbation identifiers are removed from non-language categories; intended language perturbations are preserved."
+                },
+                "rows": [
+                  {
+                    "id": "None",
+                    "label": "No visual supervision",
+                    "type": "baseline",
+                    "libero_mean": 97.02,
+                    "libero_sd": 0.15,
+                    "plus_rate": 70.87,
+                    "perception_passes": 0,
+                    "perception_loss_coefficient": 0.0,
+                    "category_deltas_pp": {
+                      "camera": 0.0,
+                      "robot_init": 0.0,
+                      "language": 0.0,
+                      "light": 0.0,
+                      "background": 0.0,
+                      "noise": 0.0,
+                      "layout": 0.0
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "0.0",
+                      "robot_init": "0.0",
+                      "language": "0.0",
+                      "light": "0.0",
+                      "background": "0.0",
+                      "noise": "0.0",
+                      "layout": "0.0"
+                    },
+                    "source_line": 18
+                  },
+                  {
+                    "id": "D",
+                    "label": "Current depth",
+                    "type": "current",
+                    "libero_mean": 97.87,
+                    "libero_sd": 0.65,
+                    "plus_rate": 76.69,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 7.6,
+                      "robot_init": 7.7,
+                      "language": 8.0,
+                      "light": 2.9,
+                      "background": 1.8,
+                      "noise": 8.2,
+                      "layout": 2.5
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+7.6",
+                      "robot_init": "+7.7",
+                      "language": "+8.0",
+                      "light": "+2.9",
+                      "background": "+1.8",
+                      "noise": "+8.2",
+                      "layout": "+2.5"
+                    },
+                    "source_line": 19
+                  },
+                  {
+                    "id": "N",
+                    "label": "Surface normals",
+                    "type": "current",
+                    "libero_mean": 96.52,
+                    "libero_sd": 0.53,
+                    "plus_rate": 71.7,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": -1.6,
+                      "robot_init": 6.6,
+                      "language": 2.4,
+                      "light": -4.7,
+                      "background": 8.8,
+                      "noise": -2.9,
+                      "layout": -1.6
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "-1.6",
+                      "robot_init": "+6.6",
+                      "language": "+2.4",
+                      "light": "-4.7",
+                      "background": "+8.8",
+                      "noise": "-2.9",
+                      "layout": "-1.6"
+                    },
+                    "source_line": 20
+                  },
+                  {
+                    "id": "S",
+                    "label": "Semantic-part segmentation",
+                    "type": "current",
+                    "libero_mean": 97.17,
+                    "libero_sd": 0.39,
+                    "plus_rate": 76.08,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 1.2,
+                      "robot_init": 5.6,
+                      "language": 3.8,
+                      "light": 2.9,
+                      "background": 15.0,
+                      "noise": 10.5,
+                      "layout": -0.3
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+1.2",
+                      "robot_init": "+5.6",
+                      "language": "+3.8",
+                      "light": "+2.9",
+                      "background": "+15.0",
+                      "noise": "+10.5",
+                      "layout": "-0.3"
+                    },
+                    "source_line": 21
+                  },
+                  {
+                    "id": "P",
+                    "label": "Robot-frame pointmaps",
+                    "type": "current",
+                    "libero_mean": 97.52,
+                    "libero_sd": 0.6,
+                    "plus_rate": 72.19,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": -4.7,
+                      "robot_init": 0.4,
+                      "language": 5.5,
+                      "light": 2.6,
+                      "background": 13.5,
+                      "noise": -2.9,
+                      "layout": -0.7
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "-4.7",
+                      "robot_init": "+0.4",
+                      "language": "+5.5",
+                      "light": "+2.6",
+                      "background": "+13.5",
+                      "noise": "-2.9",
+                      "layout": "-0.7"
+                    },
+                    "source_line": 22
+                  },
+                  {
+                    "id": "G",
+                    "label": "Task-conditioned grounding",
+                    "type": "current",
+                    "libero_mean": 96.62,
+                    "libero_sd": 0.16,
+                    "plus_rate": 71.8,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": -7.3,
+                      "robot_init": 0.0,
+                      "language": 6.8,
+                      "light": 1.1,
+                      "background": 3.9,
+                      "noise": 2.3,
+                      "layout": 0.9
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "-7.3",
+                      "robot_init": "+0.0",
+                      "language": "+6.8",
+                      "light": "+1.1",
+                      "background": "+3.9",
+                      "noise": "+2.3",
+                      "layout": "+0.9"
+                    },
+                    "source_line": 23
+                  },
+                  {
+                    "id": "F",
+                    "label": "Future RGB",
+                    "type": "future",
+                    "libero_mean": 96.98,
+                    "libero_sd": 0.2,
+                    "plus_rate": 77.1,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 8.1,
+                      "robot_init": 4.6,
+                      "language": 1.7,
+                      "light": 1.4,
+                      "background": 17.9,
+                      "noise": 12.4,
+                      "layout": -0.6
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+8.1",
+                      "robot_init": "+4.6",
+                      "language": "+1.7",
+                      "light": "+1.4",
+                      "background": "+17.9",
+                      "noise": "+12.4",
+                      "layout": "-0.6"
+                    },
+                    "source_line": 25
+                  },
+                  {
+                    "id": "FD",
+                    "label": "Future depth",
+                    "type": "future",
+                    "libero_mean": 98.02,
+                    "libero_sd": 0.2,
+                    "plus_rate": 74.46,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": -4.4,
+                      "robot_init": 7.5,
+                      "language": 5.1,
+                      "light": -3.0,
+                      "background": 19.5,
+                      "noise": 1.7,
+                      "layout": 2.2
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "-4.4",
+                      "robot_init": "+7.5",
+                      "language": "+5.1",
+                      "light": "-3.0",
+                      "background": "+19.5",
+                      "noise": "+1.7",
+                      "layout": "+2.2"
+                    },
+                    "source_line": 26
+                  },
+                  {
+                    "id": "D+S",
+                    "label": "Current depth + semantic-part segmentation",
+                    "type": "combined",
+                    "libero_mean": 97.23,
+                    "libero_sd": 0.53,
+                    "plus_rate": 75.09,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 6.8,
+                      "robot_init": 6.4,
+                      "language": 0.6,
+                      "light": 2.4,
+                      "background": 9.9,
+                      "noise": 2.8,
+                      "layout": 1.9
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+6.8",
+                      "robot_init": "+6.4",
+                      "language": "+0.6",
+                      "light": "+2.4",
+                      "background": "+9.9",
+                      "noise": "+2.8",
+                      "layout": "+1.9"
+                    },
+                    "source_line": 28
+                  },
+                  {
+                    "id": "D+P",
+                    "label": "Current depth + robot-frame pointmaps",
+                    "type": "combined",
+                    "libero_mean": 97.78,
+                    "libero_sd": 0.28,
+                    "plus_rate": 75.53,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 10.9,
+                      "robot_init": 3.6,
+                      "language": 5.1,
+                      "light": 1.6,
+                      "background": 3.0,
+                      "noise": 6.5,
+                      "layout": 0.4
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+10.9",
+                      "robot_init": "+3.6",
+                      "language": "+5.1",
+                      "light": "+1.6",
+                      "background": "+3.0",
+                      "noise": "+6.5",
+                      "layout": "+0.4"
+                    },
+                    "source_line": 29
+                  },
+                  {
+                    "id": "D+F",
+                    "label": "Current depth + future RGB",
+                    "type": "combined",
+                    "libero_mean": 97.37,
+                    "libero_sd": 0.47,
+                    "plus_rate": 77.42,
+                    "perception_passes": 1,
+                    "perception_loss_coefficient": 0.1,
+                    "category_deltas_pp": {
+                      "camera": 6.1,
+                      "robot_init": 9.2,
+                      "language": 4.9,
+                      "light": 0.3,
+                      "background": 12.3,
+                      "noise": 11.7,
+                      "layout": 1.2
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+6.1",
+                      "robot_init": "+9.2",
+                      "language": "+4.9",
+                      "light": "+0.3",
+                      "background": "+12.3",
+                      "noise": "+11.7",
+                      "layout": "+1.2"
+                    },
+                    "source_line": 30
+                  },
+                  {
+                    "id": "D+N+S+P",
+                    "label": "Current depth + normals + segmentation + pointmaps",
+                    "type": "combined",
+                    "libero_mean": 97.77,
+                    "libero_sd": 0.33,
+                    "plus_rate": 75.45,
+                    "perception_passes": 2,
+                    "perception_loss_coefficient": 0.2,
+                    "category_deltas_pp": {
+                      "camera": 9.4,
+                      "robot_init": 0.8,
+                      "language": 0.8,
+                      "light": 1.4,
+                      "background": 4.3,
+                      "noise": 12.4,
+                      "layout": 1.6
+                    },
+                    "category_delta_labels_pp": {
+                      "camera": "+9.4",
+                      "robot_init": "+0.8",
+                      "language": "+0.8",
+                      "light": "+1.4",
+                      "background": "+4.3",
+                      "noise": "+12.4",
+                      "layout": "+1.6"
+                    },
+                    "source_line": 31
+                  }
+                ]
+              }
+            </script>
+          </section>
+        </div>
+      </section>
+
+      <section id="demos" class="section wrap">
+        <div class="section-top"
+          ><span class="section-number">DEMOS</span><span class="section-rule"></span
+        ></div>
+        <div class="section-intro"
+          ><h2>Real-world demonstrations.</h2
+          ><p>USB transfer on a real robot, shown at original speed.</p></div
+        >
+        <div class="demo-grid">
+          <figure
+            ><div class="video-shell"
+              ><video
+                controls
+                controlslist="nodownload"
+                playsinline
+                preload="none"
+                poster="assets/01_standard.jpg"
+                aria-label="Standard USB manipulation demonstration"
+                ><source src="assets/01_standard.mp4" type="video/mp4" />Your browser does not
+                support HTML video.</video
+              ></div
+            ><figcaption><strong>Standard scene</strong></figcaption></figure
+          >
+          <figure
+            ><div class="video-shell"
+              ><video
+                controls
+                controlslist="nodownload"
+                playsinline
+                preload="none"
+                poster="assets/02_scene_perturbation.jpg"
+                aria-label="USB manipulation with additional scene objects"
+                ><source src="assets/02_scene_perturbation.mp4" type="video/mp4" />Your browser does
+                not support HTML video.</video
+              ></div
+            ><figcaption><strong>Background perturbation</strong></figcaption></figure
+          >
+          <figure
+            ><div class="video-shell"
+              ><video
+                controls
+                controlslist="nodownload"
+                playsinline
+                preload="none"
+                poster="assets/03_lighting_perturbation.jpg"
+                aria-label="USB manipulation under perturbed lighting"
+                ><source src="assets/03_lighting_perturbation.mp4" type="video/mp4" />Your browser
+                does not support HTML video.</video
+              ></div
+            ><figcaption><strong>Lighting perturbation</strong></figcaption></figure
+          >
+        </div>
+      </section>
+
+      <section id="citation" class="section wrap citation-section" aria-labelledby="citation-title">
+        <div class="citation-heading"
+          ><h2 id="citation-title">Citation</h2
+          ><button type="button" class="citation-copy" data-copy-citation>Copy BibTeX</button></div
+        >
+        <pre
+          class="citation-code"
+          tabindex="0"
+          aria-label="BibTeX citation"
+        ><code id="citation-bibtex">@misc{deng2026genpa,
+  title  = {{GenPA}: Image Generators as Efficient Robot Policies},
+  author = {Deng, Zian and Zhang, Tianyi and Zheng, Zilong and
+            Liu, Ziyu and Zhang, Tao and Lyu, Yao and Li, Shengbo Eben},
+  year   = {2026},
+  url    = {https://openreview.net/forum?id=WA0THUR3x9}
+}</code></pre>
+        <span class="sr-only" id="citation-copy-status" role="status" aria-live="polite"></span>
+      </section>
+      <section id="resources" class="resource-band"
+        ><div class="wrap resource-inner"
+          ><div
+            ><span class="small-label">EXPLORE THE WORK</span><h2>Explore GenPA.</h2
+            ><p
+              >Read the full manuscript for experimental details, ablations, evaluation protocols,
+              and limitations.</p
+            ></div
+          ><div class="resource-list"
+            ><a href="assets/genpa-paper.pdf" target="_blank" rel="noopener"
+              ><span><strong>Research paper</strong><small>Full manuscript · PDF</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a href="https://openreview.net/forum?id=WA0THUR3x9" target="_blank" rel="noopener"
+              ><span><strong>OpenReview</strong><small>Paper and public discussion</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><div class="resource-pending"
+              ><span><strong>Code</strong><small>Coming soon</small></span
+              ><span class="status-dot" aria-hidden="true"></span></div
+            ><div class="resource-pending"
+              ><span><strong>Models</strong><small>Coming soon</small></span
+              ><span class="status-dot" aria-hidden="true"></span></div
+            ><div class="resource-pending"
+              ><span><strong>Dataset</strong><small>Coming soon</small></span
+              ><span class="status-dot" aria-hidden="true"></span></div></div></div
+      ></section>
+    </main>
+    <footer class="wrap"
+      ><a class="wordmark" href="#"
+        >Gen<span>PA</span><span class="wordmark-dot" aria-hidden="true"></span></a
+      ><p>Image Generators as Efficient Robot Policies</p><a href="#main">Back to top ↑</a></footer
+    >
+    <script src="results.js?v=fd94cda927" defer></script>
+  </body>
+</html>

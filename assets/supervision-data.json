@@ -1,0 +1,445 @@
+{
+  "schema_version": 1,
+  "title": "Visual supervision within one policy architecture",
+  "source": {
+    "paper_title": "GenPA: Image Generators as Efficient Robot Policies",
+    "table": "tables/supervision_ablation.tex",
+    "table_label": "tab:visual-supervision",
+    "table_sha256": "f42021c1e75231bdfefaffb6074f15fb1bad797667b6a7008fb5a4955ee0a344",
+    "protocol_references": [
+      "sections/evaluation.tex",
+      "sections/visual_supervision_details.tex",
+      "sections/appendix_implementation.tex",
+      "tables/appendix_visual_sampling.tex"
+    ]
+  },
+  "units": {
+    "libero_mean": "percent success",
+    "libero_sd": "percentage points",
+    "plus_rate": "percent success",
+    "category_deltas_pp": "percentage-point change from no visual supervision",
+    "category_baseline_percent": "percent success"
+  },
+  "categories": [
+    {
+      "id": "camera",
+      "label": "Camera viewpoints",
+      "baseline_percent": 66.42
+    },
+    {
+      "id": "robot_init",
+      "label": "Robot initial states",
+      "baseline_percent": 59.1
+    },
+    {
+      "id": "language",
+      "label": "Language instructions",
+      "baseline_percent": 79.38
+    },
+    {
+      "id": "light",
+      "label": "Lighting conditions",
+      "baseline_percent": 93.08
+    },
+    {
+      "id": "background",
+      "label": "Background textures",
+      "baseline_percent": 43.4
+    },
+    {
+      "id": "noise",
+      "label": "Sensor noise",
+      "baseline_percent": 73.52
+    },
+    {
+      "id": "layout",
+      "label": "Object layouts",
+      "baseline_percent": 78.89
+    }
+  ],
+  "protocol": {
+    "comparison": "Visual-target ablation configuration",
+    "fixed_controls": [
+      "Policy architecture",
+      "Training data",
+      "Maximum action-update budget",
+      "RGB/target preprocessing"
+    ],
+    "maximum_action_updates": 36750,
+    "input_views": 2,
+    "view_size_pixels": [
+      256,
+      256
+    ],
+    "packed_image_size_height_width": [
+      256,
+      512
+    ],
+    "stochastic_augmentation": false,
+    "spatial_resizing": false,
+    "different_from_main_policy": true,
+    "main_policy_difference": "The headline LIBERO policy uses 224×224 views and training augmentation. These target-ablation scores must not be substituted for main-policy or release-reevaluation scores.",
+    "compute_equated": false,
+    "perception_sampling": "None: no perception pass. Single target: one fixed target. Two-target combinations: uniformly sample one target per observation. Four-target combination: uniformly sample two distinct targets and sum their losses.",
+    "loss_coefficient_per_selected_target": 0.1,
+    "libero_statistic": "Mean ± standard deviation across 3 evaluation seeds for one fixed checkpoint per configuration; not 3 training seeds.",
+    "libero_evaluation_seed_count": 3,
+    "same_fixed_checkpoint_for_both_benchmarks": true,
+    "plus_statistic": "Absolute LIBERO-Plus success rate from the source table; no training-seed error bar is reported here.",
+    "category_statistic": "Published one-decimal percentage-point changes from None, not absolute success rates. Category baselines retain the published two-decimal rates.",
+    "none_delta_note": "The source table displays absolute category rates for None; its zero deltas here are the defined reference, not additional reported measurements.",
+    "rounding_note": "Category deltas are retained exactly as published; adding rounded deltas to baselines does not recover higher-precision category rates.",
+    "causal_limit": "The common policy architecture limits architectural confounds, but perception computation and total perception-loss weight differ across rows.",
+    "plus_instruction_protocol": "Clean instructions: appended perturbation identifiers are removed from non-language categories; intended language perturbations are preserved."
+  },
+  "rows": [
+    {
+      "id": "None",
+      "label": "No visual supervision",
+      "type": "baseline",
+      "libero_mean": 97.02,
+      "libero_sd": 0.15,
+      "plus_rate": 70.87,
+      "perception_passes": 0,
+      "perception_loss_coefficient": 0.0,
+      "category_deltas_pp": {
+        "camera": 0.0,
+        "robot_init": 0.0,
+        "language": 0.0,
+        "light": 0.0,
+        "background": 0.0,
+        "noise": 0.0,
+        "layout": 0.0
+      },
+      "category_delta_labels_pp": {
+        "camera": "0.0",
+        "robot_init": "0.0",
+        "language": "0.0",
+        "light": "0.0",
+        "background": "0.0",
+        "noise": "0.0",
+        "layout": "0.0"
+      },
+      "source_line": 18
+    },
+    {
+      "id": "D",
+      "label": "Current depth",
+      "type": "current",
+      "libero_mean": 97.87,
+      "libero_sd": 0.65,
+      "plus_rate": 76.69,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 7.6,
+        "robot_init": 7.7,
+        "language": 8.0,
+        "light": 2.9,
+        "background": 1.8,
+        "noise": 8.2,
+        "layout": 2.5
+      },
+      "category_delta_labels_pp": {
+        "camera": "+7.6",
+        "robot_init": "+7.7",
+        "language": "+8.0",
+        "light": "+2.9",
+        "background": "+1.8",
+        "noise": "+8.2",
+        "layout": "+2.5"
+      },
+      "source_line": 19
+    },
+    {
+      "id": "N",
+      "label": "Surface normals",
+      "type": "current",
+      "libero_mean": 96.52,
+      "libero_sd": 0.53,
+      "plus_rate": 71.7,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": -1.6,
+        "robot_init": 6.6,
+        "language": 2.4,
+        "light": -4.7,
+        "background": 8.8,
+        "noise": -2.9,
+        "layout": -1.6
+      },
+      "category_delta_labels_pp": {
+        "camera": "-1.6",
+        "robot_init": "+6.6",
+        "language": "+2.4",
+        "light": "-4.7",
+        "background": "+8.8",
+        "noise": "-2.9",
+        "layout": "-1.6"
+      },
+      "source_line": 20
+    },
+    {
+      "id": "S",
+      "label": "Semantic-part segmentation",
+      "type": "current",
+      "libero_mean": 97.17,
+      "libero_sd": 0.39,
+      "plus_rate": 76.08,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 1.2,
+        "robot_init": 5.6,
+        "language": 3.8,
+        "light": 2.9,
+        "background": 15.0,
+        "noise": 10.5,
+        "layout": -0.3
+      },
+      "category_delta_labels_pp": {
+        "camera": "+1.2",
+        "robot_init": "+5.6",
+        "language": "+3.8",
+        "light": "+2.9",
+        "background": "+15.0",
+        "noise": "+10.5",
+        "layout": "-0.3"
+      },
+      "source_line": 21
+    },
+    {
+      "id": "P",
+      "label": "Robot-frame pointmaps",
+      "type": "current",
+      "libero_mean": 97.52,
+      "libero_sd": 0.6,
+      "plus_rate": 72.19,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": -4.7,
+        "robot_init": 0.4,
+        "language": 5.5,
+        "light": 2.6,
+        "background": 13.5,
+        "noise": -2.9,
+        "layout": -0.7
+      },
+      "category_delta_labels_pp": {
+        "camera": "-4.7",
+        "robot_init": "+0.4",
+        "language": "+5.5",
+        "light": "+2.6",
+        "background": "+13.5",
+        "noise": "-2.9",
+        "layout": "-0.7"
+      },
+      "source_line": 22
+    },
+    {
+      "id": "G",
+      "label": "Task-conditioned grounding",
+      "type": "current",
+      "libero_mean": 96.62,
+      "libero_sd": 0.16,
+      "plus_rate": 71.8,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": -7.3,
+        "robot_init": 0.0,
+        "language": 6.8,
+        "light": 1.1,
+        "background": 3.9,
+        "noise": 2.3,
+        "layout": 0.9
+      },
+      "category_delta_labels_pp": {
+        "camera": "-7.3",
+        "robot_init": "+0.0",
+        "language": "+6.8",
+        "light": "+1.1",
+        "background": "+3.9",
+        "noise": "+2.3",
+        "layout": "+0.9"
+      },
+      "source_line": 23
+    },
+    {
+      "id": "F",
+      "label": "Future RGB",
+      "type": "future",
+      "libero_mean": 96.98,
+      "libero_sd": 0.2,
+      "plus_rate": 77.1,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 8.1,
+        "robot_init": 4.6,
+        "language": 1.7,
+        "light": 1.4,
+        "background": 17.9,
+        "noise": 12.4,
+        "layout": -0.6
+      },
+      "category_delta_labels_pp": {
+        "camera": "+8.1",
+        "robot_init": "+4.6",
+        "language": "+1.7",
+        "light": "+1.4",
+        "background": "+17.9",
+        "noise": "+12.4",
+        "layout": "-0.6"
+      },
+      "source_line": 25
+    },
+    {
+      "id": "FD",
+      "label": "Future depth",
+      "type": "future",
+      "libero_mean": 98.02,
+      "libero_sd": 0.2,
+      "plus_rate": 74.46,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": -4.4,
+        "robot_init": 7.5,
+        "language": 5.1,
+        "light": -3.0,
+        "background": 19.5,
+        "noise": 1.7,
+        "layout": 2.2
+      },
+      "category_delta_labels_pp": {
+        "camera": "-4.4",
+        "robot_init": "+7.5",
+        "language": "+5.1",
+        "light": "-3.0",
+        "background": "+19.5",
+        "noise": "+1.7",
+        "layout": "+2.2"
+      },
+      "source_line": 26
+    },
+    {
+      "id": "D+S",
+      "label": "Current depth + semantic-part segmentation",
+      "type": "combined",
+      "libero_mean": 97.23,
+      "libero_sd": 0.53,
+      "plus_rate": 75.09,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 6.8,
+        "robot_init": 6.4,
+        "language": 0.6,
+        "light": 2.4,
+        "background": 9.9,
+        "noise": 2.8,
+        "layout": 1.9
+      },
+      "category_delta_labels_pp": {
+        "camera": "+6.8",
+        "robot_init": "+6.4",
+        "language": "+0.6",
+        "light": "+2.4",
+        "background": "+9.9",
+        "noise": "+2.8",
+        "layout": "+1.9"
+      },
+      "source_line": 28
+    },
+    {
+      "id": "D+P",
+      "label": "Current depth + robot-frame pointmaps",
+      "type": "combined",
+      "libero_mean": 97.78,
+      "libero_sd": 0.28,
+      "plus_rate": 75.53,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 10.9,
+        "robot_init": 3.6,
+        "language": 5.1,
+        "light": 1.6,
+        "background": 3.0,
+        "noise": 6.5,
+        "layout": 0.4
+      },
+      "category_delta_labels_pp": {
+        "camera": "+10.9",
+        "robot_init": "+3.6",
+        "language": "+5.1",
+        "light": "+1.6",
+        "background": "+3.0",
+        "noise": "+6.5",
+        "layout": "+0.4"
+      },
+      "source_line": 29
+    },
+    {
+      "id": "D+F",
+      "label": "Current depth + future RGB",
+      "type": "combined",
+      "libero_mean": 97.37,
+      "libero_sd": 0.47,
+      "plus_rate": 77.42,
+      "perception_passes": 1,
+      "perception_loss_coefficient": 0.1,
+      "category_deltas_pp": {
+        "camera": 6.1,
+        "robot_init": 9.2,
+        "language": 4.9,
+        "light": 0.3,
+        "background": 12.3,
+        "noise": 11.7,
+        "layout": 1.2
+      },
+      "category_delta_labels_pp": {
+        "camera": "+6.1",
+        "robot_init": "+9.2",
+        "language": "+4.9",
+        "light": "+0.3",
+        "background": "+12.3",
+        "noise": "+11.7",
+        "layout": "+1.2"
+      },
+      "source_line": 30
+    },
+    {
+      "id": "D+N+S+P",
+      "label": "Current depth + normals + segmentation + pointmaps",
+      "type": "combined",
+      "libero_mean": 97.77,
+      "libero_sd": 0.33,
+      "plus_rate": 75.45,
+      "perception_passes": 2,
+      "perception_loss_coefficient": 0.2,
+      "category_deltas_pp": {
+        "camera": 9.4,
+        "robot_init": 0.8,
+        "language": 0.8,
+        "light": 1.4,
+        "background": 4.3,
+        "noise": 12.4,
+        "layout": 1.6
+      },
+      "category_delta_labels_pp": {
+        "camera": "+9.4",
+        "robot_init": "+0.8",
+        "language": "+0.8",
+        "light": "+1.4",
+        "background": "+4.3",
+        "noise": "+12.4",
+        "layout": "+1.6"
+      },
+      "source_line": 31
+    }
+  ]
+}
