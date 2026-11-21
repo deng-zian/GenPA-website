@@ -3,7 +3,7 @@
 Project page for **GenPA: Image Generators as Efficient Robot Policies**.
 
 - Website: https://deng-zian.github.io/GenPA-website/
-- Research code, model weights, and dataset releases are in preparation.
+- [Code](https://github.com/deng-zian/GenPA) · [Checkpoints](https://huggingface.co/Deduktive/GenPA) · [LIBERO dataset](https://huggingface.co/datasets/Deduktive/GenPA-LIBERO)
 
 ## Preview locally
 
@@ -28,7 +28,7 @@ Open http://127.0.0.1:8770/ in your browser.
 - `SOURCES.md`: content and asset attribution.
 - `scripts/check_site.py`: local structure, link, data, and JavaScript checks.
 
-The embedded JSON allows the page to work without data requests. Matching JSON assets are retained for maintenance; update both copies together when changing research data. Original media are listed in `asset-manifest.json` with SHA-256 hashes.
+The embedded JSON allows the page to work without data requests. Matching JSON assets are retained for maintenance; update both copies together when changing research data.
 
 ## Validate changes
 
@@ -41,5 +41,3 @@ Python 3 is required. JavaScript syntax is also checked when Node.js is availabl
 ## Publish
 
 GitHub Pages serves the `main` branch from the repository root. The `.nojekyll` file enables direct static publication. Commit and push changes to update the site.
-
-The Paper and Citation entries can be updated when the arXiv version is available. Replace the existing Code, Models, and Dataset placeholders when each release is ready.

@@ -3,15 +3,8 @@
   "title": "Visual supervision within one policy architecture",
   "source": {
     "paper_title": "GenPA: Image Generators as Efficient Robot Policies",
-    "table": "tables/supervision_ablation.tex",
-    "table_label": "tab:visual-supervision",
-    "table_sha256": "f42021c1e75231bdfefaffb6074f15fb1bad797667b6a7008fb5a4955ee0a344",
-    "protocol_references": [
-      "sections/evaluation.tex",
-      "sections/visual_supervision_details.tex",
-      "sections/appendix_implementation.tex",
-      "tables/appendix_visual_sampling.tex"
-    ]
+    "table": "Table 7",
+    "protocol": "Appendix B"
   },
   "units": {
     "libero_mean": "percent success",
@@ -119,8 +112,7 @@
         "background": "0.0",
         "noise": "0.0",
         "layout": "0.0"
-      },
-      "source_line": 18
+      }
     },
     {
       "id": "D",
@@ -148,8 +140,7 @@
         "background": "+1.8",
         "noise": "+8.2",
         "layout": "+2.5"
-      },
-      "source_line": 19
+      }
     },
     {
       "id": "N",
@@ -177,8 +168,7 @@
         "background": "+8.8",
         "noise": "-2.9",
         "layout": "-1.6"
-      },
-      "source_line": 20
+      }
     },
     {
       "id": "S",
@@ -206,8 +196,7 @@
         "background": "+15.0",
         "noise": "+10.5",
         "layout": "-0.3"
-      },
-      "source_line": 21
+      }
     },
     {
       "id": "P",
@@ -235,8 +224,7 @@
         "background": "+13.5",
         "noise": "-2.9",
         "layout": "-0.7"
-      },
-      "source_line": 22
+      }
     },
     {
       "id": "G",
@@ -264,8 +252,7 @@
         "background": "+3.9",
         "noise": "+2.3",
         "layout": "+0.9"
-      },
-      "source_line": 23
+      }
     },
     {
       "id": "F",
@@ -293,8 +280,7 @@
         "background": "+17.9",
         "noise": "+12.4",
         "layout": "-0.6"
-      },
-      "source_line": 25
+      }
     },
     {
       "id": "FD",
@@ -322,8 +308,7 @@
         "background": "+19.5",
         "noise": "+1.7",
         "layout": "+2.2"
-      },
-      "source_line": 26
+      }
     },
     {
       "id": "D+S",
@@ -351,8 +336,7 @@
         "background": "+9.9",
         "noise": "+2.8",
         "layout": "+1.9"
-      },
-      "source_line": 28
+      }
     },
     {
       "id": "D+P",
@@ -380,8 +364,7 @@
         "background": "+3.0",
         "noise": "+6.5",
         "layout": "+0.4"
-      },
-      "source_line": 29
+      }
     },
     {
       "id": "D+F",
@@ -409,8 +392,7 @@
         "background": "+12.3",
         "noise": "+11.7",
         "layout": "+1.2"
-      },
-      "source_line": 30
+      }
     },
     {
       "id": "D+N+S+P",
@@ -438,8 +420,7 @@
         "background": "+4.3",
         "noise": "+12.4",
         "layout": "+1.6"
-      },
-      "source_line": 31
+      }
     }
   ]
 }

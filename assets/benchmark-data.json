@@ -1,13 +1,12 @@
 {
   "title": "GenPA benchmark comparisons",
   "unit": "success rate (%)",
-  "source": "Bundled GenPA November 11 revision, Tables 1–3; existing website validation data",
-  "paper_sha256": "1659cc8615fc23fd6b67354802fe0e2afd50474d39ea4249c9c92d1276254923",
+  "source": "GenPA, Tables 1–3 and Appendix C",
   "benchmarks": [
     {
       "id": "libero",
       "label": "LIBERO",
-      "source_table": "libero_main.tex",
+      "source_table": "Table 1",
       "paper_page": 6,
       "context": "40 tabletop manipulation tasks",
       "finding": "GenPA has the highest average among the listed policies without additional robot-data pretraining.",
@@ -173,7 +172,7 @@
     {
       "id": "plus",
       "label": "LIBERO-Plus",
-      "source_table": "robustness_main.tex",
+      "source_table": "Table 2",
       "paper_page": 6,
       "context": "10,030 instances · seven perturbation categories",
       "finding": "83.79% success using the LIBERO checkpoint, without additional fine-tuning.",
@@ -317,7 +316,7 @@
     {
       "id": "robotwin",
       "label": "RoboTwin 2.0",
-      "source_table": "robotwin_main.tex",
+      "source_table": "Table 3",
       "paper_page": 7,
       "context": "50 bimanual tasks · 10,000 evaluation trials",
       "finding": "91.45% average success across Clean and Randomized conditions.",

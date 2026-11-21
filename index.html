@@ -114,11 +114,7 @@
             >
               <path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6" /></svg
             >Paper</a
-          ><button
-            class="button resource-unavailable"
-            type="button"
-            disabled
-            title="The public code release is in preparation"
+          ><a class="button" href="https://github.com/deng-zian/GenPA" target="_blank" rel="noopener"
             ><svg
               viewBox="0 0 24 24"
               fill="none"
@@ -127,12 +123,8 @@
               aria-hidden="true"
             >
               <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" /></svg
-            >Code <span>Coming soon</span></button
-          ><button
-            class="button resource-unavailable"
-            type="button"
-            disabled
-            title="Public model checkpoints are in preparation"
+            >Code</a
+          ><a class="button" href="https://huggingface.co/Deduktive/GenPA" target="_blank" rel="noopener"
             ><svg
               viewBox="0 0 24 24"
               fill="none"
@@ -141,12 +133,8 @@
               aria-hidden="true"
             >
               <path d="m12 2 9 5v10l-9 5-9-5V7zm0 10L3 7m9 5 9-5m-9 5v10M7.5 4.5l9 5" /></svg
-            >Models <span>Coming soon</span></button
-          ><button
-            class="button resource-unavailable"
-            type="button"
-            disabled
-            title="The public dataset release is in preparation"
+            >Models</a
+          ><a class="button" href="https://huggingface.co/datasets/Deduktive/GenPA-LIBERO" target="_blank" rel="noopener"
             ><svg
               viewBox="0 0 24 24"
               fill="none"
@@ -158,7 +146,7 @@
               <path
                 d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"
               /></svg
-            >Dataset <span>Coming soon</span></button
+            >Dataset</a
           ></div
         ><div class="hero-secondary-links"
           ><a href="https://openreview.net/forum?id=WA0THUR3x9" target="_blank" rel="noopener"
@@ -965,9 +953,8 @@
                     "caption": "Aligned agent and wrist views from a LIBERO demonstration. These are simulator-derived training targets, not GenPA predictions; the deployed policy receives RGB observations, not these target maps.",
                     "task_instruction": "Pick up the milk and place it in the basket.",
                     "source": {
-                      "paper_section": "sections/visual_supervision_details.tex",
-                      "paper_figure_label": "fig:appendix-visual-targets",
-                      "source_note": "Existing original 256 × 256 panels used in the manuscript; image pixels are unchanged."
+                      "paper_section": "Appendix B",
+                      "figure": "Figure 4"
                     },
                     "views": [
                       {
@@ -975,7 +962,11 @@
                         "label": "Agent view",
                         "reference_image": "agent_rgb_t.png"
                       },
-                      { "id": "wrist", "label": "Wrist view", "reference_image": "wrist_rgb_t.png" }
+                      {
+                        "id": "wrist",
+                        "label": "Wrist view",
+                        "reference_image": "wrist_rgb_t.png"
+                      }
                     ],
                     "targets": [
                       {
@@ -983,121 +974,70 @@
                         "label": "Current depth",
                         "description": "Optical-axis depth is encoded in grayscale with a fixed log-inverse mapping: nearer surfaces are brighter.",
                         "legend": "The preview is a rounded display of a floating-point training target, not raw depth in meters. The fixed LIBERO mapping clips depths to 0.04–3.5 m and is shared across frames and cameras.",
-                        "images": { "agent": "agent_d.png", "wrist": "wrist_d.png" }
+                        "images": {
+                          "agent": "agent_d.png",
+                          "wrist": "wrist_d.png"
+                        }
                       },
                       {
                         "id": "N",
                         "label": "Surface normals",
                         "description": "RGB encodes the X, Y, and Z components of surface normals in the camera coordinate frame.",
                         "legend": "Camera axes are +X right, +Y down, and +Z forward; normals are oriented toward the camera. Each component maps from −1…+1 to 0…255. Black marks excluded or invalid neighborhoods, not a surface orientation.",
-                        "images": { "agent": "agent_n.png", "wrist": "wrist_n.png" }
+                        "images": {
+                          "agent": "agent_n.png",
+                          "wrist": "wrist_n.png"
+                        }
                       },
                       {
                         "id": "P",
                         "label": "Robot-frame pointmaps",
                         "description": "RGB encodes the X, Y, and Z coordinates of visible surface points in the robot-base frame.",
                         "legend": "The fixed coordinate encoding is shared across frames and cameras. Central X/Y/Z intervals are [−0.25,1.00], [−0.45,0.50], and [−0.10,0.50] m, mapped to codes 16…240, with smooth tails outside these intervals. Black marks invalid points; these colors are coordinates, not object classes.",
-                        "images": { "agent": "agent_p.png", "wrist": "wrist_p.png" }
+                        "images": {
+                          "agent": "agent_p.png",
+                          "wrist": "wrist_p.png"
+                        }
                       },
                       {
                         "id": "S",
                         "label": "Semantic-part segmentation",
                         "description": "A fixed color palette identifies semantic parts throughout the scene, including objects, robot parts, and articulated parts.",
                         "legend": "The 37-class ontology and palette are shared across all four LIBERO suites and both cameras; same-class instances share a color. This is task-independent semantic labeling, not per-instance random coloring.",
-                        "images": { "agent": "agent_s.png", "wrist": "wrist_s.png" }
+                        "images": {
+                          "agent": "agent_s.png",
+                          "wrist": "wrist_s.png"
+                        }
                       },
                       {
                         "id": "G",
                         "label": "Task-conditioned grounding",
                         "description": "RGB marks the operation object, goal or anchor, and active articulated part for the current demonstration stage.",
                         "legend": "Red = operation object; green = goal or anchor; blue = active articulated part. Roles are independent and overlapping roles blend colors. Black = no assigned role at that pixel. In this example the agent view shows red milk and green basket; the wrist view shows only red milk. No blue active-part pixels appear in either view.",
-                        "images": { "agent": "agent_g.png", "wrist": "wrist_g.png" }
+                        "images": {
+                          "agent": "agent_g.png",
+                          "wrist": "wrist_g.png"
+                        }
                       },
                       {
                         "id": "F",
                         "label": "Future RGB",
                         "description": "The RGB target shows the demonstration scene 16 retained action steps into the future, using the current RGB observation as reference.",
                         "legend": "The offset counts retained steps after no-op filtering, not necessarily original simulator frames; the target clips to the final retained frame near the trajectory end.",
-                        "images": { "agent": "agent_rgb_t16.png", "wrist": "wrist_rgb_t16.png" }
+                        "images": {
+                          "agent": "agent_rgb_t16.png",
+                          "wrist": "wrist_rgb_t16.png"
+                        }
                       },
                       {
                         "id": "FD",
                         "label": "Future depth",
                         "description": "The depth target uses the same future state as Future RGB and the same fixed depth encoding as Current depth.",
                         "legend": "Future depth is one supervision task, not the combination of current depth and future RGB. Its PNG is a rounded display preview of the floating-point target.",
-                        "images": { "agent": "agent_fd.png", "wrist": "wrist_fd.png" }
-                      }
-                    ],
-                    "display_notes": [
-                      "Use the same image scale for reference and target panels; do not apply per-image contrast normalization.",
-                      "Do not add a linear metric-depth colorbar to the grayscale previews. A short Nearer → brighter legend is sufficient.",
-                      "Keep target colors unchanged; normals, pointmaps, semantic parts, and grounding have different color meanings.",
-                      "Future RGB and future depth share one future source state."
-                    ],
-                    "verified_assets": [
-                      {
-                        "filename": "agent_rgb_t.png",
-                        "sha256": "c17b86e73abb9844cc6e448450f65d881f3ed57216619de0ea0266143339412b"
-                      },
-                      {
-                        "filename": "agent_d.png",
-                        "sha256": "ebc56699b473692d281234f3e5dfc3a7713a1f76ec29a709e14713581184a172"
-                      },
-                      {
-                        "filename": "agent_n.png",
-                        "sha256": "4e7abf9d259b7bed8eebbfd048b6cebe7a822615310d2564ee258d250cd69d5c"
-                      },
-                      {
-                        "filename": "agent_s.png",
-                        "sha256": "d3d18aed0286110a08f75cc61f5aac7b8484cae8caccb90034d3bed4e76d47cf"
-                      },
-                      {
-                        "filename": "agent_p.png",
-                        "sha256": "120dbc49d2dbc2392514fa064e263c909e0062d220f7e4d77e7529dbcc9e559b"
-                      },
-                      {
-                        "filename": "agent_rgb_t16.png",
-                        "sha256": "6aa5dd177f86428f160853c18451a2fc105ec51f153762a0b714fd64f5ea8ffa"
-                      },
-                      {
-                        "filename": "wrist_rgb_t.png",
-                        "sha256": "4ea3d41293aae57e82a0c328296fd9a5faec7d7e6526b849b12a795c6599e5c4"
-                      },
-                      {
-                        "filename": "wrist_d.png",
-                        "sha256": "670d7f6977e18308901050953bc54bd864fb33fb6a4e9341651630a0d9ea34ab"
-                      },
-                      {
-                        "filename": "wrist_n.png",
-                        "sha256": "06b7cfcb9d14d8a2b8213045d5ec756c69f6da10514924dffccee76f3df0bf3c"
-                      },
-                      {
-                        "filename": "wrist_s.png",
-                        "sha256": "926a625c2e1c2e165069804b0214c78d0f8b26b5e628c10466f98d803550ada6"
-                      },
-                      {
-                        "filename": "wrist_p.png",
-                        "sha256": "d7fce066dbd606b307319314b62434abc9f3b9f629eae614f3df7dcd54ac3879"
-                      },
-                      {
-                        "filename": "wrist_rgb_t16.png",
-                        "sha256": "3cf237f9bdacfe6c2fdfec10acb8f94e47dcc2051612b6660f5bc8de3cd7c09f"
-                      },
-                      {
-                        "filename": "agent_g.png",
-                        "sha256": "43666d9d09eaacbde9e85c1531762741186112554ec6809ac71393c265d50bd9"
-                      },
-                      {
-                        "filename": "wrist_g.png",
-                        "sha256": "2503ee3cd3ebd8af1f1e8afac4f751156c63b47022e82775abca9ea5c9449142"
-                      },
-                      {
-                        "filename": "agent_fd.png",
-                        "sha256": "45e86ec8af30a1b9bf50b29734fd62fece8d84fa7f9933ee40170a799f5a59e1"
-                      },
-                      {
-                        "filename": "wrist_fd.png",
-                        "sha256": "c3118f00ee2afca31852747043fa6046d8eaa89ef70dd9ea3b6d9915ae3d1d4e"
+                        "images": {
+                          "agent": "agent_fd.png",
+                          "wrist": "wrist_fd.png"
+                        }
                       }
                     ]
                   }
@@ -1160,24 +1100,38 @@
             {
               "title": "GenPA benchmark comparisons",
               "unit": "success rate (%)",
-              "source": "Bundled GenPA November 11 revision, Tables 1–3; existing website validation data",
-              "paper_sha256": "1659cc8615fc23fd6b67354802fe0e2afd50474d39ea4249c9c92d1276254923",
+              "source": "GenPA, Tables 1–3 and Appendix C",
               "benchmarks": [
                 {
                   "id": "libero",
                   "label": "LIBERO",
-                  "source_table": "libero_main.tex",
+                  "source_table": "Table 1",
                   "paper_page": 6,
                   "context": "40 tabletop manipulation tasks",
                   "finding": "GenPA has the highest average among the listed policies without additional robot-data pretraining.",
                   "note": "GenPA: checkpoint-selection evaluation. Baselines: published reports; native settings differ.",
                   "total_key": "average",
                   "columns": [
-                    { "key": "average", "label": "Average" },
-                    { "key": "spatial", "label": "Spatial" },
-                    { "key": "object", "label": "Object" },
-                    { "key": "goal", "label": "Goal" },
-                    { "key": "long", "label": "Long" }
+                    {
+                      "key": "average",
+                      "label": "Average"
+                    },
+                    {
+                      "key": "spatial",
+                      "label": "Spatial"
+                    },
+                    {
+                      "key": "object",
+                      "label": "Object"
+                    },
+                    {
+                      "key": "goal",
+                      "label": "Goal"
+                    },
+                    {
+                      "key": "long",
+                      "label": "Long"
+                    }
                   ],
                   "rows": [
                     {
@@ -1317,21 +1271,45 @@
                 {
                   "id": "plus",
                   "label": "LIBERO-Plus",
-                  "source_table": "robustness_main.tex",
+                  "source_table": "Table 2",
                   "paper_page": 6,
                   "context": "10,030 instances · seven perturbation categories",
                   "finding": "83.79% success using the LIBERO checkpoint, without additional fine-tuning.",
                   "note": "All policies re-evaluated under Clean-Instruction. Overall success pools all 10,030 instances.",
                   "total_key": "overall",
                   "columns": [
-                    { "key": "overall", "label": "Overall" },
-                    { "key": "camera", "label": "Camera" },
-                    { "key": "robot_init", "label": "Robot init." },
-                    { "key": "language", "label": "Language" },
-                    { "key": "lighting", "label": "Lighting" },
-                    { "key": "background", "label": "Background" },
-                    { "key": "noise", "label": "Noise" },
-                    { "key": "layout", "label": "Layout" }
+                    {
+                      "key": "overall",
+                      "label": "Overall"
+                    },
+                    {
+                      "key": "camera",
+                      "label": "Camera"
+                    },
+                    {
+                      "key": "robot_init",
+                      "label": "Robot init."
+                    },
+                    {
+                      "key": "language",
+                      "label": "Language"
+                    },
+                    {
+                      "key": "lighting",
+                      "label": "Lighting"
+                    },
+                    {
+                      "key": "background",
+                      "label": "Background"
+                    },
+                    {
+                      "key": "noise",
+                      "label": "Noise"
+                    },
+                    {
+                      "key": "layout",
+                      "label": "Layout"
+                    }
                   ],
                   "rows": [
                     {
@@ -1437,74 +1415,138 @@
                 {
                   "id": "robotwin",
                   "label": "RoboTwin 2.0",
-                  "source_table": "robotwin_main.tex",
+                  "source_table": "Table 3",
                   "paper_page": 7,
                   "context": "50 bimanual tasks · 10,000 evaluation trials",
                   "finding": "91.45% average success across Clean and Randomized conditions.",
                   "note": "GenPA uses a wider action adapter for bimanual control. Baseline scores are from published reports.",
                   "total_key": "average",
                   "columns": [
-                    { "key": "average", "label": "Average" },
-                    { "key": "clean", "label": "Clean" },
-                    { "key": "randomized", "label": "Randomized" }
+                    {
+                      "key": "average",
+                      "label": "Average"
+                    },
+                    {
+                      "key": "clean",
+                      "label": "Clean"
+                    },
+                    {
+                      "key": "randomized",
+                      "label": "Randomized"
+                    }
                   ],
                   "rows": [
                     {
                       "label": "ImageWAM",
                       "robot_pretraining": false,
-                      "values": { "clean": 93.2, "randomized": 93.56, "average": 93.38 }
+                      "values": {
+                        "clean": 93.2,
+                        "randomized": 93.56,
+                        "average": 93.38
+                      }
                     },
                     {
                       "label": "Qwen-RobotManip",
                       "robot_pretraining": true,
-                      "values": { "clean": 93.4, "randomized": 92.5, "average": 93.0 }
+                      "values": {
+                        "clean": 93.4,
+                        "randomized": 92.5,
+                        "average": 93.0
+                      }
                     },
                     {
                       "label": "Fast-WAM",
                       "robot_pretraining": false,
-                      "values": { "clean": 91.88, "randomized": 91.78, "average": 91.83 }
+                      "values": {
+                        "clean": 91.88,
+                        "randomized": 91.78,
+                        "average": 91.83
+                      }
                     },
                     {
                       "label": "GenPA",
                       "robot_pretraining": false,
-                      "values": { "clean": 92.08, "randomized": 90.82, "average": 91.45 }
+                      "values": {
+                        "clean": 92.08,
+                        "randomized": 90.82,
+                        "average": 91.45
+                      }
                     },
                     {
                       "label": "Motus",
                       "robot_pretraining": true,
-                      "values": { "clean": 88.66, "randomized": 87.02, "average": 87.84 }
+                      "values": {
+                        "clean": 88.66,
+                        "randomized": 87.02,
+                        "average": 87.84
+                      }
                     },
                     {
                       "label": "π₀.₅",
                       "robot_pretraining": true,
-                      "values": { "clean": 82.74, "randomized": 76.76, "average": 79.75 }
+                      "values": {
+                        "clean": 82.74,
+                        "randomized": 76.76,
+                        "average": 79.75
+                      }
                     }
                   ]
                 }
               ],
               "validation": {
                 "training_runs": {
-                  "seeds": [42, 142, 242],
+                  "seeds": [
+                    42,
+                    142,
+                    242
+                  ],
                   "unit": "success rate (%)",
                   "standard_deviation": "sample SD across three training runs",
                   "rows": [
                     {
                       "label": "Action only",
-                      "libero": [98.8, 0.22],
-                      "plus_clean": [79.49, 0.85],
-                      "plus_official": [74.63, 4.03]
+                      "libero": [
+                        98.8,
+                        0.22
+                      ],
+                      "plus_clean": [
+                        79.49,
+                        0.85
+                      ],
+                      "plus_official": [
+                        74.63,
+                        4.03
+                      ]
                     },
                     {
                       "label": "GenPA · current depth",
-                      "libero": [98.87, 0.25],
-                      "plus_clean": [82.33, 1.27],
-                      "plus_official": [78.67, 3.97]
+                      "libero": [
+                        98.87,
+                        0.25
+                      ],
+                      "plus_clean": [
+                        82.33,
+                        1.27
+                      ],
+                      "plus_official": [
+                        78.67,
+                        3.97
+                      ]
                     },
                     {
                       "label": "Future RGB supervision",
-                      "libero": [98.68, 0.1],
-                      "plus_clean": [81.8, 2.05],
-                      "plus_official": [77.74, 6.57]
+                      "libero": [
+                        98.68,
+                        0.1
+                      ],
+                      "plus_clean": [
+                        81.8,
+                        2.05
+                      ],
+                      "plus_official": [
+                        77.74,
+                        6.57
+                      ]
                     }
                   ]
                 },
@@ -1521,8 +1563,16 @@
                   "libero": 99.1,
                   "plus_clean": 83.79,
                   "plus_official": 83.01,
-                  "successes": [1982, 8404, 8326],
-                  "counts": [2000, 10030, 10030]
+                  "successes": [
+                    1982,
+                    8404,
+                    8326
+                  ],
+                  "counts": [
+                    2000,
+                    10030,
+                    10030
+                  ]
                 }
               }
             }
@@ -2223,10 +2273,7 @@
                 "units": "milliseconds",
                 "display_precision": 2,
                 "sources": [
-                  "GenPA manuscript tables/architecture_latency_totals.tex",
-                  "GenPA manuscript tables/architecture_latency_measures.tex",
-                  "GenPA manuscript evidence/latency_figure3_E10_sources.json",
-                  "GenPA manuscript sections/evaluation.tex, Latency across policy architectures"
+                  "GenPA, Figure 3 and Appendix D"
                 ],
                 "measurement": {
                   "calls_per_configuration": 600,
@@ -2240,43 +2287,91 @@
                     "id": "genpa",
                     "label": "GenPA",
                     "detail": "Direct regression",
-                    "uncompiled": { "mean_ms": 27.86, "sd_ms": 0.32, "p95_ms": 29.49 },
-                    "compiled": { "mean_ms": 20.94, "sd_ms": 0.47, "p95_ms": 21.58 }
+                    "uncompiled": {
+                      "mean_ms": 27.86,
+                      "sd_ms": 0.32,
+                      "p95_ms": 29.49
+                    },
+                    "compiled": {
+                      "mean_ms": 20.94,
+                      "sd_ms": 0.47,
+                      "p95_ms": 21.58
+                    }
                   },
                   {
                     "id": "genpa-flow",
                     "label": "GenPA (flow)",
                     "detail": "Flow action head",
-                    "uncompiled": { "mean_ms": 53.89, "sd_ms": 0.62, "p95_ms": 65.99 },
-                    "compiled": { "mean_ms": 29.22, "sd_ms": 0.15, "p95_ms": 29.62 }
+                    "uncompiled": {
+                      "mean_ms": 53.89,
+                      "sd_ms": 0.62,
+                      "p95_ms": 65.99
+                    },
+                    "compiled": {
+                      "mean_ms": 29.22,
+                      "sd_ms": 0.15,
+                      "p95_ms": 29.62
+                    }
                   },
                   {
                     "id": "pi05",
                     "label": "π₀.₅",
                     "detail": "",
-                    "uncompiled": { "mean_ms": 166.1, "sd_ms": 0.96, "p95_ms": 168.23 },
-                    "compiled": { "mean_ms": 36.59, "sd_ms": 0.06, "p95_ms": 36.8 }
+                    "uncompiled": {
+                      "mean_ms": 166.1,
+                      "sd_ms": 0.96,
+                      "p95_ms": 168.23
+                    },
+                    "compiled": {
+                      "mean_ms": 36.59,
+                      "sd_ms": 0.06,
+                      "p95_ms": 36.8
+                    }
                   },
                   {
                     "id": "oft",
                     "label": "OpenVLA-OFT",
                     "detail": "",
-                    "uncompiled": { "mean_ms": 72.12, "sd_ms": 1.29, "p95_ms": 74.6 },
-                    "compiled": { "mean_ms": 53.36, "sd_ms": 0.29, "p95_ms": 54.73 }
+                    "uncompiled": {
+                      "mean_ms": 72.12,
+                      "sd_ms": 1.29,
+                      "p95_ms": 74.6
+                    },
+                    "compiled": {
+                      "mean_ms": 53.36,
+                      "sd_ms": 0.29,
+                      "p95_ms": 54.73
+                    }
                   },
                   {
                     "id": "imagewam",
                     "label": "ImageWAM",
                     "detail": "",
-                    "uncompiled": { "mean_ms": 159.51, "sd_ms": 1.69, "p95_ms": 161.62 },
-                    "compiled": { "mean_ms": 57.39, "sd_ms": 1.27, "p95_ms": 59.89 }
+                    "uncompiled": {
+                      "mean_ms": 159.51,
+                      "sd_ms": 1.69,
+                      "p95_ms": 161.62
+                    },
+                    "compiled": {
+                      "mean_ms": 57.39,
+                      "sd_ms": 1.27,
+                      "p95_ms": 59.89
+                    }
                   },
                   {
                     "id": "fastwam",
                     "label": "Fast-WAM",
                     "detail": "",
-                    "uncompiled": { "mean_ms": 322.07, "sd_ms": 9.53, "p95_ms": 335.19 },
-                    "compiled": { "mean_ms": 71.34, "sd_ms": 0.23, "p95_ms": 72.28 }
+                    "uncompiled": {
+                      "mean_ms": 322.07,
+                      "sd_ms": 9.53,
+                      "p95_ms": 335.19
+                    },
+                    "compiled": {
+                      "mean_ms": 71.34,
+                      "sd_ms": 0.23,
+                      "p95_ms": 72.28
+                    }
                   }
                 ]
               }
@@ -2286,13 +2381,16 @@
                 "title": "H100 component profiling and independently timed totals",
                 "unit": "ms per native action chunk",
                 "sources": [
-                  "GenPA manuscript tables/latency_h100_breakdown.tex",
-                  "GenPA manuscript sections/appendix_efficiency.tex, Measurement Protocol and Component Profiling and Compilation",
-                  "GenPA manuscript tables/architecture_latency_configs.tex",
-                  "GenPA manuscript evidence/latency_figure3_E10_sources.json",
-                  "GenPA E9 architecture latency audit, architecture_summary.json (2026-09-17)"
+                  "GenPA, Table 30 and Appendix D",
+                  "Additional H100 component profiling of the eight-step GenPA flow policy"
                 ],
-                "component_order": ["vision", "backbone", "vision_backbone", "action", "other"],
+                "component_order": [
+                  "vision",
+                  "backbone",
+                  "vision_backbone",
+                  "action",
+                  "other"
+                ],
                 "component_labels": {
                   "vision": "Vision",
                   "backbone": "Backbone",
@@ -2413,7 +2511,11 @@
                       "independent_total_sd_ms": 0.96
                     },
                     "compiled": {
-                      "components_ms": { "vision_backbone": 14.09, "action": 14.2, "other": 8.75 },
+                      "components_ms": {
+                        "vision_backbone": 14.09,
+                        "action": 14.2,
+                        "other": 8.75
+                      },
                       "independent_total_ms": 36.59,
                       "independent_total_sd_ms": 0.06
                     }
@@ -2741,15 +2843,8 @@
                 "title": "Visual supervision within one policy architecture",
                 "source": {
                   "paper_title": "GenPA: Image Generators as Efficient Robot Policies",
-                  "table": "tables/supervision_ablation.tex",
-                  "table_label": "tab:visual-supervision",
-                  "table_sha256": "f42021c1e75231bdfefaffb6074f15fb1bad797667b6a7008fb5a4955ee0a344",
-                  "protocol_references": [
-                    "sections/evaluation.tex",
-                    "sections/visual_supervision_details.tex",
-                    "sections/appendix_implementation.tex",
-                    "tables/appendix_visual_sampling.tex"
-                  ]
+                  "table": "Table 7",
+                  "protocol": "Appendix B"
                 },
                 "units": {
                   "libero_mean": "percent success",
@@ -2759,13 +2854,41 @@
                   "category_baseline_percent": "percent success"
                 },
                 "categories": [
-                  { "id": "camera", "label": "Camera viewpoints", "baseline_percent": 66.42 },
-                  { "id": "robot_init", "label": "Robot initial states", "baseline_percent": 59.1 },
-                  { "id": "language", "label": "Language instructions", "baseline_percent": 79.38 },
-                  { "id": "light", "label": "Lighting conditions", "baseline_percent": 93.08 },
-                  { "id": "background", "label": "Background textures", "baseline_percent": 43.4 },
-                  { "id": "noise", "label": "Sensor noise", "baseline_percent": 73.52 },
-                  { "id": "layout", "label": "Object layouts", "baseline_percent": 78.89 }
+                  {
+                    "id": "camera",
+                    "label": "Camera viewpoints",
+                    "baseline_percent": 66.42
+                  },
+                  {
+                    "id": "robot_init",
+                    "label": "Robot initial states",
+                    "baseline_percent": 59.1
+                  },
+                  {
+                    "id": "language",
+                    "label": "Language instructions",
+                    "baseline_percent": 79.38
+                  },
+                  {
+                    "id": "light",
+                    "label": "Lighting conditions",
+                    "baseline_percent": 93.08
+                  },
+                  {
+                    "id": "background",
+                    "label": "Background textures",
+                    "baseline_percent": 43.4
+                  },
+                  {
+                    "id": "noise",
+                    "label": "Sensor noise",
+                    "baseline_percent": 73.52
+                  },
+                  {
+                    "id": "layout",
+                    "label": "Object layouts",
+                    "baseline_percent": 78.89
+                  }
                 ],
                 "protocol": {
                   "comparison": "Visual-target ablation configuration",
@@ -2777,8 +2900,14 @@
                   ],
                   "maximum_action_updates": 36750,
                   "input_views": 2,
-                  "view_size_pixels": [256, 256],
-                  "packed_image_size_height_width": [256, 512],
+                  "view_size_pixels": [
+                    256,
+                    256
+                  ],
+                  "packed_image_size_height_width": [
+                    256,
+                    512
+                  ],
                   "stochastic_augmentation": false,
                   "spatial_resizing": false,
                   "different_from_main_policy": true,
@@ -2823,8 +2952,7 @@
                       "background": "0.0",
                       "noise": "0.0",
                       "layout": "0.0"
-                    },
-                    "source_line": 18
+                    }
                   },
                   {
                     "id": "D",
@@ -2852,8 +2980,7 @@
                       "background": "+1.8",
                       "noise": "+8.2",
                       "layout": "+2.5"
-                    },
-                    "source_line": 19
+                    }
                   },
                   {
                     "id": "N",
@@ -2881,8 +3008,7 @@
                       "background": "+8.8",
                       "noise": "-2.9",
                       "layout": "-1.6"
-                    },
-                    "source_line": 20
+                    }
                   },
                   {
                     "id": "S",
@@ -2910,8 +3036,7 @@
                       "background": "+15.0",
                       "noise": "+10.5",
                       "layout": "-0.3"
-                    },
-                    "source_line": 21
+                    }
                   },
                   {
                     "id": "P",
@@ -2939,8 +3064,7 @@
                       "background": "+13.5",
                       "noise": "-2.9",
                       "layout": "-0.7"
-                    },
-                    "source_line": 22
+                    }
                   },
                   {
                     "id": "G",
@@ -2968,8 +3092,7 @@
                       "background": "+3.9",
                       "noise": "+2.3",
                       "layout": "+0.9"
-                    },
-                    "source_line": 23
+                    }
                   },
                   {
                     "id": "F",
@@ -2997,8 +3120,7 @@
                       "background": "+17.9",
                       "noise": "+12.4",
                       "layout": "-0.6"
-                    },
-                    "source_line": 25
+                    }
                   },
                   {
                     "id": "FD",
@@ -3026,8 +3148,7 @@
                       "background": "+19.5",
                       "noise": "+1.7",
                       "layout": "+2.2"
-                    },
-                    "source_line": 26
+                    }
                   },
                   {
                     "id": "D+S",
@@ -3055,8 +3176,7 @@
                       "background": "+9.9",
                       "noise": "+2.8",
                       "layout": "+1.9"
-                    },
-                    "source_line": 28
+                    }
                   },
                   {
                     "id": "D+P",
@@ -3084,8 +3204,7 @@
                       "background": "+3.0",
                       "noise": "+6.5",
                       "layout": "+0.4"
-                    },
-                    "source_line": 29
+                    }
                   },
                   {
                     "id": "D+F",
@@ -3113,8 +3232,7 @@
                       "background": "+12.3",
                       "noise": "+11.7",
                       "layout": "+1.2"
-                    },
-                    "source_line": 30
+                    }
                   },
                   {
                     "id": "D+N+S+P",
@@ -3142,8 +3260,7 @@
                       "background": "+4.3",
                       "noise": "+12.4",
                       "layout": "+1.6"
-                    },
-                    "source_line": 31
+                    }
                   }
                 ]
               }
@@ -3217,10 +3334,9 @@
           aria-label="BibTeX citation"
         ><code id="citation-bibtex">@misc{deng2026genpa,
   title  = {{GenPA}: Image Generators as Efficient Robot Policies},
-  author = {Deng, Zian and Zhang, Tianyi and Zheng, Zilong and
-            Liu, Ziyu and Zhang, Tao and Lyu, Yao and Li, Shengbo Eben},
+  author = {Deng, Zian and Zhang, Tianyi and Zheng, Zilong and Liu, Ziyu and Zhang, Tao and Lyu, Yao and Li, Shengbo Eben},
   year   = {2026},
-  url    = {https://openreview.net/forum?id=WA0THUR3x9}
+  url    = {https://deng-zian.github.io/GenPA-website/}
 }</code></pre>
         <span class="sr-only" id="citation-copy-status" role="status" aria-live="polite"></span>
       </section>
@@ -3229,8 +3345,7 @@
           ><div
             ><span class="small-label">EXPLORE THE WORK</span><h2>Explore GenPA.</h2
             ><p
-              >Read the full manuscript for experimental details, ablations, evaluation protocols,
-              and limitations.</p
+              >Read the paper, run a checkpoint, or explore the visual targets used for training.</p
             ></div
           ><div class="resource-list"
             ><a href="assets/genpa-paper.pdf" target="_blank" rel="noopener"
@@ -3239,15 +3354,15 @@
             ><a href="https://openreview.net/forum?id=WA0THUR3x9" target="_blank" rel="noopener"
               ><span><strong>OpenReview</strong><small>Paper and public discussion</small></span
               ><span aria-hidden="true">↗</span></a
-            ><div class="resource-pending"
-              ><span><strong>Code</strong><small>Coming soon</small></span
-              ><span class="status-dot" aria-hidden="true"></span></div
-            ><div class="resource-pending"
-              ><span><strong>Models</strong><small>Coming soon</small></span
-              ><span class="status-dot" aria-hidden="true"></span></div
-            ><div class="resource-pending"
-              ><span><strong>Dataset</strong><small>Coming soon</small></span
-              ><span class="status-dot" aria-hidden="true"></span></div></div></div
+            ><a href="https://github.com/deng-zian/GenPA" target="_blank" rel="noopener"
+              ><span><strong>Code</strong><small>Training and evaluation</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a href="https://huggingface.co/Deduktive/GenPA" target="_blank" rel="noopener"
+              ><span><strong>Models</strong><small>LIBERO and RoboTwin checkpoints</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a href="https://huggingface.co/datasets/Deduktive/GenPA-LIBERO" target="_blank" rel="noopener"
+              ><span><strong>Dataset</strong><small>LIBERO demonstrations and visual targets</small></span
+              ><span aria-hidden="true">↗</span></a></div></div
       ></section>
     </main>
     <footer class="wrap"

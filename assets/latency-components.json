@@ -2,11 +2,8 @@
   "title": "H100 component profiling and independently timed totals",
   "unit": "ms per native action chunk",
   "sources": [
-    "GenPA manuscript tables/latency_h100_breakdown.tex",
-    "GenPA manuscript sections/appendix_efficiency.tex, Measurement Protocol and Component Profiling and Compilation",
-    "GenPA manuscript tables/architecture_latency_configs.tex",
-    "GenPA manuscript evidence/latency_figure3_E10_sources.json",
-    "GenPA E9 architecture latency audit, architecture_summary.json (2026-09-17)"
+    "GenPA, Table 30 and Appendix D",
+    "Additional H100 component profiling of the eight-step GenPA flow policy"
   ],
   "component_order": [
     "vision",

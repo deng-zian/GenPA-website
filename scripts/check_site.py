@@ -4,7 +4,6 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
-import hashlib
 import json
 import re
 import shutil
@@ -71,16 +70,13 @@ def check():
             assert url.fragment in page.ids, f'Missing anchor: {ref}'
     for inline, filename in {
         'benchmark-data': 'benchmark-data.json',
+        'visual-target-data': 'visual-targets.json',
         'gul-total-data': 'latency-data.json',
         'gul-profile-data': 'latency-components.json',
         'supervision-data': 'supervision-data.json',
     }.items():
         assert page.datasets[inline] == json.loads((ROOT / 'assets' / filename).read_text()), \
             f'Embedded data differs from {filename}'
-    for filename, expected in json.loads((ROOT / 'asset-manifest.json').read_text()).items():
-        data = (ROOT / filename).read_bytes()
-        assert len(data) == expected['bytes'], f'Asset size changed: {filename}'
-        assert hashlib.sha256(data).hexdigest() == expected['sha256'], f'Asset hash changed: {filename}'
     for css in ROOT.glob('*.css'):
         for ref in re.findall(r'url\([\"\']?([^\)\"\']+)', css.read_text()):
             if not urlsplit(ref).scheme and not ref.startswith('#'):

@@ -3,10 +3,7 @@
   "units": "milliseconds",
   "display_precision": 2,
   "sources": [
-    "GenPA manuscript tables/architecture_latency_totals.tex",
-    "GenPA manuscript tables/architecture_latency_measures.tex",
-    "GenPA manuscript evidence/latency_figure3_E10_sources.json",
-    "GenPA manuscript sections/evaluation.tex, Latency across policy architectures"
+    "GenPA, Figure 3 and Appendix D"
   ],
   "measurement": {
     "calls_per_configuration": 600,

@@ -4,9 +4,8 @@
   "caption": "Aligned agent and wrist views from a LIBERO demonstration. These are simulator-derived training targets, not GenPA predictions; the deployed policy receives RGB observations, not these target maps.",
   "task_instruction": "Pick up the milk and place it in the basket.",
   "source": {
-    "paper_section": "sections/visual_supervision_details.tex",
-    "paper_figure_label": "fig:appendix-visual-targets",
-    "source_note": "Existing original 256 × 256 panels used in the manuscript; image pixels are unchanged."
+    "paper_section": "Appendix B",
+    "figure": "Figure 4"
   },
   "views": [
     {
@@ -90,78 +89,6 @@
         "agent": "agent_fd.png",
         "wrist": "wrist_fd.png"
       }
-    }
-  ],
-  "display_notes": [
-    "Use the same image scale for reference and target panels; do not apply per-image contrast normalization.",
-    "Do not add a linear metric-depth colorbar to the grayscale previews. A short Nearer → brighter legend is sufficient.",
-    "Keep target colors unchanged; normals, pointmaps, semantic parts, and grounding have different color meanings.",
-    "Future RGB and future depth share one future source state."
-  ],
-  "verified_assets": [
-    {
-      "filename": "agent_rgb_t.png",
-      "sha256": "c17b86e73abb9844cc6e448450f65d881f3ed57216619de0ea0266143339412b"
-    },
-    {
-      "filename": "agent_d.png",
-      "sha256": "ebc56699b473692d281234f3e5dfc3a7713a1f76ec29a709e14713581184a172"
-    },
-    {
-      "filename": "agent_n.png",
-      "sha256": "4e7abf9d259b7bed8eebbfd048b6cebe7a822615310d2564ee258d250cd69d5c"
-    },
-    {
-      "filename": "agent_s.png",
-      "sha256": "d3d18aed0286110a08f75cc61f5aac7b8484cae8caccb90034d3bed4e76d47cf"
-    },
-    {
-      "filename": "agent_p.png",
-      "sha256": "120dbc49d2dbc2392514fa064e263c909e0062d220f7e4d77e7529dbcc9e559b"
-    },
-    {
-      "filename": "agent_rgb_t16.png",
-      "sha256": "6aa5dd177f86428f160853c18451a2fc105ec51f153762a0b714fd64f5ea8ffa"
-    },
-    {
-      "filename": "wrist_rgb_t.png",
-      "sha256": "4ea3d41293aae57e82a0c328296fd9a5faec7d7e6526b849b12a795c6599e5c4"
-    },
-    {
-      "filename": "wrist_d.png",
-      "sha256": "670d7f6977e18308901050953bc54bd864fb33fb6a4e9341651630a0d9ea34ab"
-    },
-    {
-      "filename": "wrist_n.png",
-      "sha256": "06b7cfcb9d14d8a2b8213045d5ec756c69f6da10514924dffccee76f3df0bf3c"
-    },
-    {
-      "filename": "wrist_s.png",
-      "sha256": "926a625c2e1c2e165069804b0214c78d0f8b26b5e628c10466f98d803550ada6"
-    },
-    {
-      "filename": "wrist_p.png",
-      "sha256": "d7fce066dbd606b307319314b62434abc9f3b9f629eae614f3df7dcd54ac3879"
-    },
-    {
-      "filename": "wrist_rgb_t16.png",
-      "sha256": "3cf237f9bdacfe6c2fdfec10acb8f94e47dcc2051612b6660f5bc8de3cd7c09f"
-    },
-    {
-      "filename": "agent_g.png",
-      "sha256": "43666d9d09eaacbde9e85c1531762741186112554ec6809ac71393c265d50bd9"
-    },
-    {
-      "filename": "wrist_g.png",
-      "sha256": "2503ee3cd3ebd8af1f1e8afac4f751156c63b47022e82775abca9ea5c9449142"
-    },
-    {
-      "filename": "agent_fd.png",
-      "sha256": "45e86ec8af30a1b9bf50b29734fd62fece8d84fa7f9933ee40170a799f5a59e1"
-    },
-    {
-      "filename": "wrist_fd.png",
-      "sha256": "c3118f00ee2afca31852747043fa6046d8eaa89ef70dd9ea3b6d9915ae3d1d4e"
     }
   ]
 }
