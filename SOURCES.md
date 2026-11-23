@@ -13,7 +13,7 @@ The website presents **GenPA: Image Generators as Efficient Robot Policies**. Re
 | Visual supervision study | Manuscript supervision-ablation table, recorded in `assets/supervision-data.json`. This uses the dedicated training configuration described on the page. |
 | Demonstration videos | The three original supplementary videos, presented at their original playback speed. Posters use a frame from each video. |
 | Paper and citation | [GenPA on arXiv](https://arxiv.org/abs/2611.27446) and the project's [OpenReview entry](https://openreview.net/forum?id=WA0THUR3x9). |
-| Resource icons | [arXiv small logomark](https://github.com/arXiv/arxiv-browse/blob/develop/browse/static/images/arxiv-logomark-small-white.svg), [GitHub mark from Octicons](https://github.com/primer/octicons/blob/main/icons/mark-github-16.svg) ([MIT license](assets/icons/octicons-LICENSE.txt)), and the [Hugging Face logo](https://huggingface.co/brand). |
+| Resource icons | [arXiv small logomark](https://github.com/arXiv/arxiv-docs/blob/develop/source/assets/arxiv-logomark-small-ORIG-COLORS.svg), [GitHub mark from Octicons](https://github.com/primer/octicons/blob/main/icons/mark-github-16.svg) ([MIT license](assets/icons/octicons-LICENSE.txt)), and the [Hugging Face logo](https://huggingface.co/brand). |
 
 ## Data conventions
 
