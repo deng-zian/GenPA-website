@@ -3,7 +3,7 @@
 Project page for **GenPA: Image Generators as Efficient Robot Policies**.
 
 - Website: https://deng-zian.github.io/GenPA-website/
-- [Code](https://github.com/deng-zian/GenPA) · [Checkpoints](https://huggingface.co/Deduktive/GenPA) · [LIBERO dataset](https://huggingface.co/datasets/Deduktive/GenPA-LIBERO)
+- [Paper on arXiv](https://arxiv.org/abs/2611.27446) · [Code](https://github.com/deng-zian/GenPA) · [Weights](https://huggingface.co/Deduktive/GenPA) · [LIBERO dataset](https://huggingface.co/datasets/Deduktive/GenPA-LIBERO)
 
 ## Preview locally
 
