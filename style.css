@@ -466,6 +466,13 @@ video {
 .resource-inner p {
   max-width: 380px;
 }
+.resource-credit {
+  display: block;
+  width: fit-content;
+  margin-top: 0.65rem;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 .resource-list > a,
 .resource-pending {
   padding: 18px 0;
