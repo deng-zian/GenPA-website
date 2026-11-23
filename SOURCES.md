@@ -8,6 +8,7 @@ The website presents **GenPA: Image Generators as Efficient Robot Policies**. Re
 | Author affiliations | Author-supplied arXiv manuscript. The compact view groups institutions; the expanded view preserves the six full affiliations and corresponding author superscripts. |
 | Motivation illustrations | Original images and prompts from the manuscript motivation figure and appendix. The input frame comes from [ALOHA Unleashed](https://aloha-unleashed.github.io/); the goal and motion illustrations are GPT Image 2 edits, as attributed in the page. |
 | Visual-target gallery | Original aligned agent and wrist images from a LIBERO milk-to-basket demonstration, with the manuscript's seven visual supervision targets. Image pixels and target encodings are preserved. |
+| Project link preview | RGB, depth and segmentation are aligned panels from the [GenPA-LIBERO dataset preview](https://huggingface.co/datasets/Deduktive/GenPA-LIBERO/blob/main/preview.png). The card increases depth contrast for readability. |
 | Benchmark tables | Manuscript LIBERO, LIBERO-Plus, and RoboTwin 2.0 tables, recorded in `assets/benchmark-data.json`. |
 | Latency plots | Manuscript H100 totals and component measurements, recorded in `assets/latency-data.json` and `assets/latency-components.json`. GenPA (flow) includes the corresponding eight-step component measurements. |
 | Visual supervision study | Manuscript supervision-ablation table, recorded in `assets/supervision-data.json`. This uses the dedicated training configuration described on the page. |

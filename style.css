@@ -473,6 +473,20 @@ video {
   text-decoration: underline;
   text-underline-offset: 0.18em;
 }
+.resource-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-top: 1rem;
+  color: var(--accent);
+  font-size: 0.9375rem;
+  font-style: normal;
+}
+.resource-contact a {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 .resource-list > a,
 .resource-pending {
   padding: 18px 0;
