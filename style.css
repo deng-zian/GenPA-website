@@ -442,8 +442,22 @@ video {
 }
 .demo-grid figcaption {
   display: flex;
-  gap: 13px;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
   margin-top: 16px;
+}
+.demo-grid figcaption a {
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+}
+.demo-grid figcaption a:hover,
+.demo-grid figcaption a:focus-visible {
+  color: var(--ink);
 }
 .demo-grid p {
   color: var(--muted);
